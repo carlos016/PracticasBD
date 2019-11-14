@@ -1,0 +1,914 @@
+SQL> SELECT AR
+  2  FROM AREA JOIN DEPARTAMENTO
+  3  WHERE D IS LIKE "A%"
+  4  ;
+WHERE D IS LIKE "A%"
+*
+ERROR at line 3:
+ORA-00905: missing keyword 
+
+
+SQL> SELECT AR
+  2  FROM AREA JOIN DEPARTAMENTO
+  3  WHERE D IS LIKE 'A%';
+WHERE D IS LIKE 'A%'
+*
+ERROR at line 3:
+ORA-00905: missing keyword 
+
+
+SQL> SELECT AR
+  2  FROM AREA
+  3  WHERE ;
+WHERE 
+     *
+ERROR at line 3:
+ORA-00936: missing expression 
+
+
+SQL> SELECT A
+  2  FROM ASIGNATURA
+  3  INNER JOIN ASIGNATURA ON DEPARTAMENTO
+  4  WHERE AR IS LIKE 'A%';
+WHERE AR IS LIKE 'A%'
+*
+ERROR at line 4:
+ORA-00920: invalid relational operator 
+
+
+SQL> SELECT DISTINCT
+  2  FROM (ASIGNATURA JOIN AREA)
+  3  WHERE AR IS LIKE 'A%';
+FROM (ASIGNATURA JOIN AREA)
+*
+ERROR at line 2:
+ORA-00936: missing expression 
+
+
+SQL> SELECT DISTINCT
+  2  FROM ASIGNATURA JOIN ON AREA
+  3  WHERE AR IS LIKE 'A%';
+FROM ASIGNATURA JOIN ON AREA
+*
+ERROR at line 2:
+ORA-00936: missing expression 
+
+
+SQL> SELECT DISTINCT A
+  2  FROM ASIGNATURA JOIN ON AREA
+  3  WHERE AR IS LIKE 'A%';
+FROM ASIGNATURA JOIN ON AREA
+                     *
+ERROR at line 2:
+ORA-00903: invalid table name 
+
+
+SQL> SELECT DISTINCT A
+  2  FROM ASIGNATURA, AREA
+  3  WHERE ASIGNATURA.CAR = AREA.CAR;
+
+A                                                                                                                                                     
+--------------------------------------------------                                                                                                    
+ALGEBRA                                                                                                                                               
+BASES DE DATOS                                                                                                                                        
+INFORMATICA BASICA                                                                                                                                    
+OPTIMIZACION                                                                                                                                          
+CALCULO                                                                                                                                               
+GESTION DE RIESGOS                                                                                                                                    
+ENSENANZA DE LA MATEMATICA                                                                                                                            
+ANALISIS COMPLEJO                                                                                                                                     
+INTELIGENCIA ARTIFICIAL                                                                                                                               
+MINERIA DE DATOS                                                                                                                                      
+ALMACENES DE DATOS                                                                                                                                    
+ASTRONOMIA                                                                                                                                            
+
+12 rows selected.
+
+SQL> SELECT DISTINCT A
+  2  FROM ASIGNATURA, AREA
+  3  WHERE (ASIGNATURA.CAR = AREA.CAR) AND (AR IS LIKE 'A%');
+WHERE (ASIGNATURA.CAR = AREA.CAR) AND (AR IS LIKE 'A%')
+                                          *
+ERROR at line 3:
+ORA-00908: missing NULL keyword 
+
+
+SQL> SELECT DISTINCT A
+  2  FROM ASIGNATURA, AREA
+  3  WHERE (ASIGNATURA.CAR = AREA.CAR) AND (AR LIKE 'A%');
+
+A                                                                                                                                                     
+--------------------------------------------------                                                                                                    
+ALGEBRA                                                                                                                                               
+ANALISIS COMPLEJO                                                                                                                                     
+ASTRONOMIA                                                                                                                                            
+
+SQL> SELECT DISTINCT A
+  2  FROM ASIGNATURA, AREA
+  3  WHERE (AR LIKE 'A%');
+
+A                                                                                                                                                     
+--------------------------------------------------                                                                                                    
+ALGEBRA                                                                                                                                               
+BASES DE DATOS                                                                                                                                        
+INFORMATICA BASICA                                                                                                                                    
+OPTIMIZACION                                                                                                                                          
+CALCULO                                                                                                                                               
+GESTION DE RIESGOS                                                                                                                                    
+ENSENANZA DE LA MATEMATICA                                                                                                                            
+ANALISIS COMPLEJO                                                                                                                                     
+INTELIGENCIA ARTIFICIAL                                                                                                                               
+MINERIA DE DATOS                                                                                                                                      
+ALMACENES DE DATOS                                                                                                                                    
+ASTRONOMIA                                                                                                                                            
+
+12 rows selected.
+
+SQL> SELECT DISTINCT A
+  2  FROM ASIGNATURA JOIN AREA
+  3  WHERE AR LIKE 'A%';
+WHERE AR LIKE 'A%'
+*
+ERROR at line 3:
+ORA-00905: missing keyword 
+
+
+SQL> SELECT DISTINCT A
+  2  FROM ASIGNATURA JOIN ON AREA
+  3  WHERE AR LIKE 'A%';
+FROM ASIGNATURA JOIN ON AREA
+                     *
+ERROR at line 2:
+ORA-00903: invalid table name 
+
+
+SQL> SELECT DISTINCT A
+  2  FROM ASIGNATURA JOIN AREA
+  3  WHERE AREA.AR LIKE 'A%';
+WHERE AREA.AR LIKE 'A%'
+*
+ERROR at line 3:
+ORA-00905: missing keyword 
+
+
+SQL> SELECT DISTINCT A
+  2  FROM ASIGNATURA, AREA
+  3  WHERE (ASIGNATURA.CAR = AREA.CAR) AND (AR LIKE '%A');
+
+A                                                                                                                                                     
+--------------------------------------------------                                                                                                    
+ALGEBRA                                                                                                                                               
+OPTIMIZACION                                                                                                                                          
+ENSENANZA DE LA MATEMATICA                                                                                                                            
+CALCULO                                                                                                                                               
+ASTRONOMIA                                                                                                                                            
+
+SQL> SELECT A
+  2  FROM ASIGNATURA
+  3  WHERE A LIKE '%DATOS%';
+
+A                                                                                                                                                     
+--------------------------------------------------                                                                                                    
+BASES DE DATOS                                                                                                                                        
+ALMACENES DE DATOS                                                                                                                                    
+MINERIA DE DATOS                                                                                                                                      
+
+SQL> SELECT DNI
+  2  FROM PROFESOR
+  3  WHERE P LIKE '___R%';
+
+       DNI                                                                                                                                            
+----------                                                                                                                                            
+      3333                                                                                                                                            
+
+SQL> SELECT DNI
+  2  FROM PROFESOR
+  3  WHERE P LIKE '__R%';
+
+       DNI                                                                                                                                            
+----------                                                                                                                                            
+      2222                                                                                                                                            
+      4444                                                                                                                                            
+      6666                                                                                                                                            
+      7777                                                                                                                                            
+
+SQL> SELECT DISTINCT DNI
+  2  FROM PROFESOR
+  3  WHERE P LIKE '_____';
+
+       DNI                                                                                                                                            
+----------                                                                                                                                            
+      3333                                                                                                                                            
+      4444                                                                                                                                            
+      7777                                                                                                                                            
+      1010                                                                                                                                            
+
+SQL> SELECT DISTINCT DNI
+  2  FROM PROFESOR
+  3  WHERE P IS IN ('_____', '____', '___', '__', '_');
+WHERE P IS IN ('_____', '____', '___', '__', '_')
+           *
+ERROR at line 3:
+ORA-00908: missing NULL keyword 
+
+
+SQL> SELECT DISTINCT DNI
+  2  FROM PROFESOR
+  3  WHERE P LIKE IN ('_____', '____', '___', '__', '_');
+WHERE P LIKE IN ('_____', '____', '___', '__', '_')
+             *
+ERROR at line 3:
+ORA-00936: missing expression 
+
+
+SQL> SELECT DISTINCT DNI
+  2  FROM PROFESOR
+  3  GROUP BY P
+  4  HAVING COUNT(P) <= 5;
+SELECT DISTINCT DNI
+                *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression 
+
+
+SQL> SELECT DISTINCT DNI, COUNT(P)
+  2  FROM PROFESOR
+  3  GROUP BY P
+  4  HAVING COUNT(P) <= 5;
+SELECT DISTINCT DNI, COUNT(P)
+                *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression 
+
+
+SQL> SELECT DNI, COUNT(P)
+  2  FROM PROFESOR
+  3  GROUP BY P
+  4  HAVING COUNT(P) <= 5;
+SELECT DNI, COUNT(P)
+       *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression 
+
+
+SQL> SELECT DISTINCT DNI
+  2  FROM PROFESOR
+  3  WHERE P LIKE '_' OR '__' 0R '___' OR '____' OR '_____';
+WHERE P LIKE '_' OR '__' 0R '___' OR '____' OR '_____'
+                         *
+ERROR at line 3:
+ORA-00920: invalid relational operator 
+
+
+SQL> WHERE P LIKE '_' OR LIKE '__' 0R LIKE '___' OR LIKE '____' OR LIKE '_____';
+SP2-0734: unknown command beginning "WHERE P LI..." - rest of line ignored.
+SQL> SELECT DISTINCT DNI
+  2  FROM PROFESOR
+  3  WHERE P LIKE '_' OR LIKE '__' 0R LIKE '___' OR LIKE '____' OR LIKE '_____';
+WHERE P LIKE '_' OR LIKE '__' 0R LIKE '___' OR LIKE '____' OR LIKE '_____'
+                    *
+ERROR at line 3:
+ORA-00936: missing expression 
+
+
+SQL> SELECT DISTINCT DNI
+  2  FROM PROFESOR
+  3  WHERE P LIKE '_' OR P LIKE '__' 0R P LIKE '___' OR P LIKE '____' OR P LIKE '_____';
+WHERE P LIKE '_' OR P LIKE '__' 0R P LIKE '___' OR P LIKE '____' OR P LIKE '_____'
+                                *
+ERROR at line 3:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> SELECT DISTINCT DNI
+  2  FROM PROFESOR
+  3  WHERE P LIKE '_' OR P LIKE '__' OR P LIKE '___' OR P LIKE '____' OR P LIKE '_____';
+
+       DNI                                                                                                                                            
+----------                                                                                                                                            
+      1111                                                                                                                                            
+      3333                                                                                                                                            
+      4444                                                                                                                                            
+      5555                                                                                                                                            
+      7777                                                                                                                                            
+      1010                                                                                                                                            
+
+6 rows selected.
+
+SQL> SELECT DISTINCT DNI
+  2  FROM PROFESOR
+  3  WHERE P LIKE '_____%';
+
+       DNI                                                                                                                                            
+----------                                                                                                                                            
+      2222                                                                                                                                            
+      3333                                                                                                                                            
+      4444                                                                                                                                            
+      6666                                                                                                                                            
+      7777                                                                                                                                            
+      8888                                                                                                                                            
+      9999                                                                                                                                            
+      1010                                                                                                                                            
+      2020                                                                                                                                            
+      3030                                                                                                                                            
+
+10 rows selected.
+
+SQL> SELECT DISTINCT P
+  2  FROM PROFESOR, PLAN_DOCENTE
+  3  WHERE PROFESOR.DNI = PLAN_DOCENTE.DNI AND FF IS NULL;
+
+P                                                                                                                                                     
+------------------------------------------------------------                                                                                          
+MARIO                                                                                                                                                 
+JUAN                                                                                                                                                  
+PEDRO                                                                                                                                                 
+FRANCISCO                                                                                                                                             
+SOLEDAD                                                                                                                                               
+DAVID                                                                                                                                                 
+CARLOS                                                                                                                                                
+IVAN                                                                                                                                                  
+MARIA                                                                                                                                                 
+JOSE MANUEL                                                                                                                                           
+ANGELA                                                                                                                                                
+
+11 rows selected.
+
+SQL> SELECT DISTINCT P
+  2  FROM PROFESOR, PLAN_DOCENTE
+  3  WHERE PROFESOR.DNI = PLAN_DOCENTE.DNI AND CAS = 8;
+
+P                                                                                                                                                     
+------------------------------------------------------------                                                                                          
+JUAN                                                                                                                                                  
+JOSE MANUEL                                                                                                                                           
+
+SQL> SELECT *
+  2  FROM PLAN_DOCENTE
+  3  ORDER BY FF ASC;
+
+       DNI        CAS        CTA        CPA        CLA FI        FF                                                                                   
+---------- ---------- ---------- ---------- ---------- --------- ---------                                                                            
+      2222          3        1.5          0        1.5 01-SEP-06 31-AUG-07                                                                            
+      1010          2        1.5        1.5          3 01-SEP-05 31-AUG-08                                                                            
+      1010          9          3          0          3 01-SEP-08 31-AUG-09                                                                            
+      1111          8          3        1.5        1.5 01-SEP-07 31-AUG-09                                                                            
+      4444          4        1.5          0        1.5 01-SEP-08 31-AUG-10                                                                            
+      6666         10          3        1.5        1.5 01-SEP-08 31-AUG-11                                                                            
+      1010          9        1.5          0        1.5 01-SEP-09                                                                                      
+      9999          7          3          3          0 01-SEP-10                                                                                      
+      5555          6          3          3          0 31-MAR-10                                                                                      
+      8888         11          6          0          0 01-SEP-09                                                                                      
+      2020          3        1.5          0        1.5 01-SEP-08                                                                                      
+      7777         12        4.5          3          0 01-SEP-10                                                                                      
+      2222          4        1.5          0        1.5 01-SEP-09                                                                                      
+      3030          8          0        1.5        1.5 01-SEP-09                                                                                      
+      1111          8          3          0          0 01-SEP-09                                                                                      
+      4444          5          3          0          0 01-SEP-10                                                                                      
+      4444          1          3        1.5        1.5 01-SEP-11                                                                                      
+      3333          9        1.5          0        1.5 01-SEP-09                                                                                      
+      3333          2        1.5        1.5          3 01-SEP-08                                                                                      
+
+19 rows selected.
+
+SQL> SELECT *
+  2  FROM PLAN_DOCENTE
+  3  ORDER BY FF DESC;
+
+       DNI        CAS        CTA        CPA        CLA FI        FF                                                                                   
+---------- ---------- ---------- ---------- ---------- --------- ---------                                                                            
+      3333          2        1.5        1.5          3 01-SEP-08                                                                                      
+      7777         12        4.5          3          0 01-SEP-10                                                                                      
+      2020          3        1.5          0        1.5 01-SEP-08                                                                                      
+      8888         11          6          0          0 01-SEP-09                                                                                      
+      5555          6          3          3          0 31-MAR-10                                                                                      
+      9999          7          3          3          0 01-SEP-10                                                                                      
+      3333          9        1.5          0        1.5 01-SEP-09                                                                                      
+      4444          1          3        1.5        1.5 01-SEP-11                                                                                      
+      4444          5          3          0          0 01-SEP-10                                                                                      
+      1111          8          3          0          0 01-SEP-09                                                                                      
+      3030          8          0        1.5        1.5 01-SEP-09                                                                                      
+      2222          4        1.5          0        1.5 01-SEP-09                                                                                      
+      1010          9        1.5          0        1.5 01-SEP-09                                                                                      
+      6666         10          3        1.5        1.5 01-SEP-08 31-AUG-11                                                                            
+      4444          4        1.5          0        1.5 01-SEP-08 31-AUG-10                                                                            
+      1111          8          3        1.5        1.5 01-SEP-07 31-AUG-09                                                                            
+      1010          9          3          0          3 01-SEP-08 31-AUG-09                                                                            
+      1010          2        1.5        1.5          3 01-SEP-05 31-AUG-08                                                                            
+      2222          3        1.5          0        1.5 01-SEP-06 31-AUG-07                                                                            
+
+19 rows selected.
+
+SQL> SELECT DISTINCT P
+  2  FROM PROFESOR, PLAN_DOCENTE
+  3  WHERE PROFESOR.DNI = PLAN_DOCENTE;
+WHERE PROFESOR.DNI = PLAN_DOCENTE
+                     *
+ERROR at line 3:
+ORA-00904: "PLAN_DOCENTE": invalid identifier 
+
+
+SQL> SELECT DISTINCT P
+  2  FROM PROFESOR, PLAN_DOCENTE, ASIGNATURA
+  3  WHERE PROFESOR.DNI = PLAN_DOCENTE.DNI AND PLAN_DOCENTE.CAS = ASIGNATURA.CAS AND A LIKE '%OPTIMIZACION%'
+  4  ORDER BY P ASC;
+
+P                                                                                                                                                     
+------------------------------------------------------------                                                                                          
+JOSE MANUEL                                                                                                                                           
+JUAN                                                                                                                                                  
+
+SQL> SELECT DISTINCT P
+  2  FROM PROFESOR, AREA, DEPARTAMENTO
+  3  WHERE PROFESOR.CAR = AREA.CAR AND AREA.CD = DEPARTAMENTO.CD AND D LIKE '%MATEMATICA FUNDAMENTAL%'
+  4  ORDER BY P ASC;
+
+P                                                                                                                                                     
+------------------------------------------------------------                                                                                          
+IVAN                                                                                                                                                  
+
+SQL> SELECT A
+  2  FROM ASIGNATURA, PLAN_DOCENTE
+  3  WHERE ASIGNATURA.CAS = PLAN_DOCENTE.CAS AND DNI = 1010;
+
+A                                                                                                                                                     
+--------------------------------------------------                                                                                                    
+INTELIGENCIA ARTIFICIAL                                                                                                                               
+GESTION DE RIESGOS                                                                                                                                    
+GESTION DE RIESGOS                                                                                                                                    
+
+SQL> SELECT DISTINCT A
+  2  FROM ASIGNATURA, PLAN_DOCENTE
+  3  WHERE ASIGNATURA.CAS = PLAN_DOCENTE.CAS AND DNI = 1010;
+
+A                                                                                                                                                     
+--------------------------------------------------                                                                                                    
+GESTION DE RIESGOS                                                                                                                                    
+INTELIGENCIA ARTIFICIAL                                                                                                                               
+
+SQL> SELECT DISTINCT A
+  2  FROM ASIGNATURA, PLAN_DOCENTE, PROFESOR
+  3  WHERE ASIGNATURA.CAS = PLAN_DOCENTE.CAS AND PLAN_DOCENTE.DNI = PROFESOR.DNI AND P LIKE '%DAVID%';
+
+A                                                                                                                                                     
+--------------------------------------------------                                                                                                    
+GESTION DE RIESGOS                                                                                                                                    
+INTELIGENCIA ARTIFICIAL                                                                                                                               
+
+SQL> SELECT DISTINCT AR
+  2  FROM AREA, DEPARTAMENTO
+  3  WHERE AREA.CD = DEPARTAMENTO.CD AND D LIKE '%ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION%';
+
+AR                                                                                                                                                    
+------------------------------------------------------------                                                                                          
+CIENCIAS DE LA COMPUTACION E INTELIGENCIA ARTIFICIAL                                                                                                  
+ESTADISTICA E INVESTIGACION OPERATIVA                                                                                                                 
+LENGUAJES Y SISTEMAS INFORMATICOS                                                                                                                     
+
+SQL> SELECT DISTINCT A
+  2  FROM PLAN_DOCENTE, ASIGNATURA, PROFESOR
+  3  WHERE PLAN_DOCENTE.DNI = PROFESOR.DNI AND PLAN_DOCENTE.CAS = ASIGNATURA.CAS AND FF IS NULL AND CAT = 'CU';
+
+A                                                                                                                                                     
+--------------------------------------------------                                                                                                    
+OPTIMIZACION                                                                                                                                          
+ALMACENES DE DATOS                                                                                                                                    
+
+SQL> SELECT DISTINCT A
+  2  FROM PLAN_DOCENTE * ASIGNATURA * PROFESOR
+  3  WHERE FF IS NULL AND CAT = 'CU';
+FROM PLAN_DOCENTE * ASIGNATURA * PROFESOR
+                  *
+ERROR at line 2:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> SELECT DISTINCT A
+  2  FROM PLAN_DOCENTE, ASIGNATURA, PROFESOR
+  3  WHERE PLAN_DOCENTE.DNI = PROFESOR.DNI AND PLAN_DOCENTE.CAS = ASIGNATURA.CAS AND CAT IN ('TU', 'TEU', CEU, CD);
+WHERE PLAN_DOCENTE.DNI = PROFESOR.DNI AND PLAN_DOCENTE.CAS = ASIGNATURA.CAS AND CAT IN ('TU', 'TEU', CEU, CD)
+                                                                                                          *
+ERROR at line 3:
+ORA-00904: "CD": invalid identifier 
+
+
+SQL> WHERE PLAN_DOCENTE.DNI = PROFESOR.DNI AND PLAN_DOCENTE.CAS = ASIGNATURA.CAS AND CAT IN ('TU', 'TEU', 'CEU', 'CD');
+SP2-0734: unknown command beginning "WHERE PLAN..." - rest of line ignored.
+SQL> SELECT DISTINCT A
+  2  FROM PLAN_DOCENTE, ASIGNATURA, PROFESOR
+  3  WHERE PLAN_DOCENTE.DNI = PROFESOR.DNI AND PLAN_DOCENTE.CAS = ASIGNATURA.CAS AND CAT IN ('TU', 'TEU', 'CEU', 'CD');
+
+A                                                                                                                                                     
+--------------------------------------------------                                                                                                    
+ALGEBRA                                                                                                                                               
+BASES DE DATOS                                                                                                                                        
+INFORMATICA BASICA                                                                                                                                    
+OPTIMIZACION                                                                                                                                          
+CALCULO                                                                                                                                               
+GESTION DE RIESGOS                                                                                                                                    
+ENSENANZA DE LA MATEMATICA                                                                                                                            
+ANALISIS COMPLEJO                                                                                                                                     
+INTELIGENCIA ARTIFICIAL                                                                                                                               
+MINERIA DE DATOS                                                                                                                                      
+ALMACENES DE DATOS                                                                                                                                    
+ASTRONOMIA                                                                                                                                            
+
+12 rows selected.
+
+SQL> SELECT C1 - C2
+  2  FROM
+  3  (
+  4  SELECT DISTINCT A
+  5  FOOOR;
+FOOOR
+    *
+ERROR at line 5:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> SELECT C1 - C2
+  2  FROM
+  3  (
+  4  SELECT DISTINCT A
+  5  FROM PLAN_DOCENTE, ASIGNATURA, PROFESOR
+  6  WHERE PLAN_DOCENTE.DNI = PROFESOR.DNI AND PLAN_DOCENTE.CAS = ASIGNATURA.CAS AND FF IS NULL AND CAT = 'CU'
+  7  ) AS C1,
+  8  (
+  9  SELECT DISTINCT A
+ 10  FROM PLAN_DOCENTE, ASIGNATURA, PROFESOR
+ 11  WHERE PLAN_DOCENTE.DNI = PROFESOR.DNI AND PLAN_DOCENTE.CAS = ASIGNATURA.CAS AND CAT IN ('TU', 'TEU', 'CEU', 'CD')
+ 12  ) AS C2;
+) AS C1,
+  *
+ERROR at line 7:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> SELECT C1 - C2
+  2  FROM
+  3  (
+  4  SELECT DISTINCT A
+  5  FROM PLAN_DOCENTE, ASIGNATURA, PROFESOR
+  6  WHERE PLAN_DOCENTE.DNI = PROFESOR.DNI AND PLAN_DOCENTE.CAS = ASIGNATURA.CAS AND FF IS NULL AND CAT = 'CU'
+  7  ) AS C1,
+  8  (
+  9  SELECT DISTINCT A
+ 10  FROM PLAN_DOCENTE, ASIGNATURA, PROFESOR
+ 11  WHERE PLAN_DOCENTE.DNI = PROFESOR.DNI AND PLAN_DOCENTE.CAS = ASIGNATURA.CAS AND CAT IN ('TU', 'TEU', 'CEU', 'CD')
+ 12  ) AS C2;
+) AS C1,
+  *
+ERROR at line 7:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> SELECT DISTINCT A
+  2  FROM PLAN_DOCENTE, ASIGNATURA, PROFESOR
+  3  WHERE PLAN_DOCENTE.DNI = PROFESOR.DNI AND PLAN_DOCENTE.CAS = ASIGNATURA.CAS AND CAT IN ('TU', 'TEU', 'CEU', 'CD')
+  4  ;
+
+A                                                                                                                                                     
+--------------------------------------------------                                                                                                    
+ALGEBRA                                                                                                                                               
+BASES DE DATOS                                                                                                                                        
+INFORMATICA BASICA                                                                                                                                    
+OPTIMIZACION                                                                                                                                          
+CALCULO                                                                                                                                               
+GESTION DE RIESGOS                                                                                                                                    
+ENSENANZA DE LA MATEMATICA                                                                                                                            
+ANALISIS COMPLEJO                                                                                                                                     
+INTELIGENCIA ARTIFICIAL                                                                                                                               
+MINERIA DE DATOS                                                                                                                                      
+ALMACENES DE DATOS                                                                                                                                    
+ASTRONOMIA                                                                                                                                            
+
+12 rows selected.
+
+SQL> (SELECT DISTINCT A
+  2  FROM PLAN_DOCENTE, ASIGNATURA, PROFESOR
+  3  ;
+
+*
+ERROR at line 3:
+ORA-00907: missing right parenthesis 
+
+
+SQL> (SELECT DISTINCT A
+  2  FROM ASIGNATURA)
+  3  -
+  4  (SELECT DISTINCT A
+  5  FROM PLAN_DOCENTE, ASIGNATURA, PROFESOR
+  6  WHERE PLAN_DOCENTE.DNI = PROFESOR.DNI AND PLAN_DOCENTE.CAS = ASIGNATURA.CAS AND CAT IN ('TU', 'TEU', 'CEU', 'CD');
+-
+*
+ERROR at line 3:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> (SELECT DISTINCT A
+  2  FROM ASIGNATURA)
+  3  -
+  4  (SELECT DISTINCT A
+  5  FROM PLAN_DOCENTE, ASIGNATURA, PROFESOR
+  6  WHERE PLAN_DOCENTE.DNI = PROFESOR.DNI AND PLAN_DOCENTE.CAS = ASIGNATURA.CAS AND CAT IN ('TU', 'TEU', 'CEU', 'CD'));
+-
+*
+ERROR at line 3:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> SELECT DISTINCT A
+  2  FROM (
+  3  (SELECT DISTINCT A
+  4  FROM ASIGNATURA)
+  5  -
+  6  (SELECT DISTINCT A
+  7  FROM PLAN_DOCENTE, ASIGNATURA, PROFESOR
+  8  WHERE PLAN_DOCENTE.DNI = PROFESOR.DNI AND PLAN_DOCENTE.CAS = ASIGNATURA.CAS AND CAT IN ('TU', 'TEU', 'CEU', 'CD'))
+  9  );
+-
+*
+ERROR at line 5:
+ORA-00907: missing right parenthesis 
+
+
+SQL> SELECT DISTINCT A
+  2  FROM ((SELECT DISTINCT A
+  3  FROM ASIGNATURA) - (SELECT DISTINCT A
+  4  FROM PLAN_DOCENTE, ASIGNATURA, PROFESOR
+  5  WHERE PLAN_DOCENTE.DNI = PROFESOR.DNI AND PLAN_DOCENTE.CAS = ASIGNATURA.CAS AND CAT IN ('TU', 'TEU', 'CEU', 'CD')));
+FROM ASIGNATURA) - (SELECT DISTINCT A
+                 *
+ERROR at line 3:
+ORA-00907: missing right parenthesis 
+
+
+SQL> SELECT DISTINCT A
+  2  FROM ((SELECT DISTINCT A FROM ASIGNATURA) - (SELECT DISTINCT A FROM PLAN_DOCENTE, ASIGNATURA, PROFESOR WHERE PLAN_DOCENTE.DNI = PROFESOR.DNI AND PLAN_DOCENTE.CAS = ASIGNATURA.CAS AND CAT IN ('TU', 'TEU', 'CEU', 'CD')));
+FROM ((SELECT DISTINCT A FROM ASIGNATURA) - (SELECT DISTINCT A FROM PLAN_DOCENTE, ASIGNATURA, PROFESOR WHERE PLAN_DOCENTE.DNI = PROFESOR.DNI AND PLAN_DOCENTE.CAS = ASIGNATURA.CAS AND CAT IN ('TU', 'TEU', 'CEU', 'CD')))
+                                          *
+ERROR at line 2:
+ORA-00907: missing right parenthesis 
+
+
+SQL> NO SE COMO COJONES HACER EL 17
+SP2-0734: unknown command beginning "NO SE COMO..." - rest of line ignored.
+SQL> PASO AL 18 Y YA LUEGO SI ESO TU TE ENCARGAS GUAPO QUE TENGO MUCHA HAMBRE
+SP2-0734: unknown command beginning "PASO AL 18..." - rest of line ignored.
+SQL> SELECT DISTINCT A
+  2  FROM ASIGNATURA, AREA
+  3  WHERE AR IS IN ('LENGUAJES Y SISTEMAS INFORMATICOS', 'CIENCIA DE LA COMPUTACION E INTELIGENCIA ARTIFICIAL');
+WHERE AR IS IN ('LENGUAJES Y SISTEMAS INFORMATICOS', 'CIENCIA DE LA COMPUTACION E INTELIGENCIA ARTIFICIAL')
+            *
+ERROR at line 3:
+ORA-00908: missing NULL keyword 
+
+
+SQL> SELECT DISTINCT A
+  2  FROM ASIGNATURA, AREA
+  3  WHERE AR IN ('LENGUAJES Y SISTEMAS INFORMATICOS', 'CIENCIA DE LA COMPUTACION E INTELIGENCIA ARTIFICIAL');
+
+A                                                                                                                                                     
+--------------------------------------------------                                                                                                    
+ALGEBRA                                                                                                                                               
+BASES DE DATOS                                                                                                                                        
+INFORMATICA BASICA                                                                                                                                    
+OPTIMIZACION                                                                                                                                          
+CALCULO                                                                                                                                               
+GESTION DE RIESGOS                                                                                                                                    
+ENSENANZA DE LA MATEMATICA                                                                                                                            
+ANALISIS COMPLEJO                                                                                                                                     
+INTELIGENCIA ARTIFICIAL                                                                                                                               
+MINERIA DE DATOS                                                                                                                                      
+ALMACENES DE DATOS                                                                                                                                    
+ASTRONOMIA                                                                                                                                            
+
+12 rows selected.
+
+SQL> SELECT DISTINCT A
+  2  FROM ASIGNATURA, AREA
+  3  WHERE ASIGNATURA.CAR = AREA.CAR AND AR IN ('LENGUAJES Y SISTEMAS INFORMATICOS', 'CIENCIA DE LA COMPUTACION E INTELIGENCIA ARTIFICIAL');
+
+A                                                                                                                                                     
+--------------------------------------------------                                                                                                    
+INFORMATICA BASICA                                                                                                                                    
+BASES DE DATOS                                                                                                                                        
+MINERIA DE DATOS                                                                                                                                      
+ALMACENES DE DATOS                                                                                                                                    
+
+SQL> SELECT A
+  2  FROM ASIGNATURA, AREA
+  3  WHERE ASIGNATURA.CAR = AREA.CAR AND AR IN ('LENGUAJES Y SISTEMAS INFORMATICOS', 'CIENCIA DE LA COMPUTACION E INTELIGENCIA ARTIFICIAL');
+
+A                                                                                                                                                     
+--------------------------------------------------                                                                                                    
+INFORMATICA BASICA                                                                                                                                    
+MINERIA DE DATOS                                                                                                                                      
+ALMACENES DE DATOS                                                                                                                                    
+BASES DE DATOS                                                                                                                                        
+
+SQL> SELECT DISTINCT A
+  2  FROM ASIGNATURA, AREA
+  3  WHERE ASIGNATURA.CAR = AREA.CAR AND AR IN ('LENGUAJES Y SISTEMAS INFORMATICOS', 'CIENCIAS DE LA COMPUTACION E INTELIGENCIA ARTIFICIAL');
+
+A                                                                                                                                                     
+--------------------------------------------------                                                                                                    
+INFORMATICA BASICA                                                                                                                                    
+BASES DE DATOS                                                                                                                                        
+GESTION DE RIESGOS                                                                                                                                    
+INTELIGENCIA ARTIFICIAL                                                                                                                               
+MINERIA DE DATOS                                                                                                                                      
+ALMACENES DE DATOS                                                                                                                                    
+
+6 rows selected.
+
+SQL> SELECT DISTINCT P
+  2  FROM PROFESOR, PLAN_DOCENTE, ASIGNATURA
+  3  WHERE PLAN_DO: unknown command beginning "PASO AL 18..." - rest of line ignored.CENTE.DNI = PROFESOR.DNI AND PLAN_DOCENTE.CAS = ASIGNATURA.CAS AND CAT IN ('TU', 'TEU', 'CEU', 'CD')));
+SP2-0552: Bind variable "UNKNOWN" not declared.
+SQL> SQL> SELECT DISTINCT A
+SP2-0734: unknown command beginning "SQL> SELEC..." - rest of line ignored.
+SQL>   2  FROM ASIGNATURA, AREA
+SQL>   3  WHERE AR IS IN ('LENGUAJES Y SISTEMAS INFORMATICOS', 'CIENCIA DE LA COMPUTACION E INTELIGENCIA ARTIFICIAL');
+SQL> WHERE AR IS IN ('LENGUAJES Y SISTEMAS INFORMATICOS', 'CIENCIA
+SP2-0734: unknown command beginning "WHERE AR I..." - rest of line ignored.
+SQL> clear
+SQL> clear
+SQL> clear
+SQL> SELECT *
+  2  FROM ASIGNATURA
+  3  ;
+
+       CAS A                                                  T           CUR        CAR         CT         CP         CL                             
+---------- -------------------------------------------------- ---- ---------- ---------- ---------- ---------- ----------                             
+         1 BASES DE DATOS                                     GII           3          7          3        1.5        1.5                             
+         2 INTELIGENCIA ARTIFICIAL                            GII           3          4        1.5        1.5          3                             
+         3 ALMACENES DE DATOS                                 MII           1          7        1.5          0        1.5                             
+         4 MINERIA DE DATOS                                   MII           1          7        1.5          0        1.5                             
+         5 INFORMATICA BASICA                                 GII           1          7          3        1.5        1.5                             
+         6 ALGEBRA                                            GII           1          1          3          3          0                             
+         7 CALCULO                                            GII           1          8          3          3          0                             
+         8 OPTIMIZACION                                       GII           1          6          3        1.5        1.5                             
+         9 GESTION DE RIESGOS                                 GII           3          4          3          0          3                             
+        10 ASTRONOMIA                                         GF            2          3          3        1.5        1.5                             
+        11 ENSENANZA DE LA MATEMATICA                         GM            2          5          6          0          0                             
+        12 ANALISIS COMPLEJO                                  GM            4          2        4.5          3          0                             
+
+12 rows selected.
+
+SQL> SELECT DISTINCT P
+  2  FROM PROFESOR, PLAN_DOCENTE, ASIGNATURA
+  3  WHERE PLAN_DOCENTE.DNI = PROFESOR.DNI AND PLAN_DOCENTE.CAS = ASIGNATURA.CAS AND FF IS NULL AND T IN ('GII', 'MII');
+
+P                                                                                                                                                     
+------------------------------------------------------------                                                                                          
+JUAN                                                                                                                                                  
+PEDRO                                                                                                                                                 
+SOLEDAD                                                                                                                                               
+CARLOS                                                                                                                                                
+IVAN                                                                                                                                                  
+DAVID                                                                                                                                                 
+MARIA                                                                                                                                                 
+JOSE MANUEL                                                                                                                                           
+ANGELA                                                                                                                                                
+
+9 rows selected.
+
+SQL> SELECT DISTINCT P
+  2  FROM PROFESOR, PLAN_DOCENTE, ASIGNATURA
+  3  WHERE PLAN_DOCENTE.DNI = PROFESOR.DNI AND PLAN_DOCENTE.CAS = ASIGNATURA.CAS AND FF IS NULL AND T = 'GII' AND T = 'MII';
+
+no rows selected
+
+SQL> SELECT DISTINCT P
+  2  FROM PROFESOR, PLAN_DOCENTE
+  3  WHERE PLAN_DOCENTE.DNI = PROFESOR.DNI AND PLAN_DOCENTE.CAS = ASIGNATURA.CAS AND FF IS NOT NULL;
+WHERE PLAN_DOCENTE.DNI = PROFESOR.DNI AND PLAN_DOCENTE.CAS = ASIGNATURA.CAS AND FF IS NOT NULL
+                                                             *
+ERROR at line 3:
+ORA-00904: "ASIGNATURA"."CAS": invalid identifier 
+
+
+SQL> SELECT DISTINCT P
+  2  FROM PROFESOR, PLAN_DOCENTE
+  3  WHERE PLAN_DOCENTE.DNI = PROFESOR.DNI AND FF IS NOT NULL;
+
+P                                                                                                                                                     
+------------------------------------------------------------                                                                                          
+JUAN                                                                                                                                                  
+DAVID                                                                                                                                                 
+CARLOS                                                                                                                                                
+CARMEN                                                                                                                                                
+MARIA                                                                                                                                                 
+
+SQL> 21 ESTA TAMBIEN PENDIENTE, TENGO MUCHA HAMBRE LOCO QUE HAGO
+SQL> SELECT DISTINCT A
+  2  FROM ASIGNATURA
+  3  WHERE T = 'GII';
+
+A                                                                                                                                                     
+--------------------------------------------------                                                                                                    
+ALGEBRA                                                                                                                                               
+BASES DE DATOS                                                                                                                                        
+INFORMATICA BASICA                                                                                                                                    
+OPTIMIZACION                                                                                                                                          
+CALCULO                                                                                                                                               
+GESTION DE RIESGOS                                                                                                                                    
+INTELIGENCIA ARTIFICIAL                                                                                                                               
+
+7 rows selected.
+
+SQL> SELECT AR, A
+  2  FROM AREA, ASIGNATURA
+  3  WHERE AREA.CAR = ASIGNATURA.CAR;
+
+AR                                                           A                                                                                        
+------------------------------------------------------------ --------------------------------------------------                                       
+ALGEBRA                                                      ALGEBRA                                                                                  
+ANALISIS MATEMATICO                                          ANALISIS COMPLEJO                                                                        
+ASTRONOMIA Y ASTROFISICA                                     ASTRONOMIA                                                                               
+CIENCIAS DE LA COMPUTACION E INTELIGENCIA ARTIFICIAL         GESTION DE RIESGOS                                                                       
+CIENCIAS DE LA COMPUTACION E INTELIGENCIA ARTIFICIAL         INTELIGENCIA ARTIFICIAL                                                                  
+DIDACTICA DE LA MATEMATICA                                   ENSENANZA DE LA MATEMATICA                                                               
+ESTADISTICA E INVESTIGACION OPERATIVA                        OPTIMIZACION                                                                             
+LENGUAJES Y SISTEMAS INFORMATICOS                            INFORMATICA BASICA                                                                       
+LENGUAJES Y SISTEMAS INFORMATICOS                            MINERIA DE DATOS                                                                         
+LENGUAJES Y SISTEMAS INFORMATICOS                            ALMACENES DE DATOS                                                                       
+LENGUAJES Y SISTEMAS INFORMATICOS                            BASES DE DATOS                                                                           
+MATEMATICA APLICADA                                          CALCULO                                                                                  
+
+12 rows selected.
+
+SQL> SELECT D, AR
+  2  FROM DEPARTAMENTO, AREA
+  3  WHERE DEPARTAMENTO.CD = AREA.CD
+  4  ORDER BY (D, AR) ASC;
+ORDER BY (D, AR) ASC
+           *
+ERROR at line 4:
+ORA-00907: missing right parenthesis 
+
+
+SQL> ORDER BY D, AR ASC;
+SP2-0734: unknown command beginning "ORDER BY D..." - rest of line ignored.
+SQL> SELECT D, AR
+  2  FROM DEPARTAMENTO, AREA
+  3  WHERE DEPARTAMENTO.CD = AREA.CD
+  4  ORDER BY D, AR ASC;
+
+D                                                            AR                                                                                       
+------------------------------------------------------------ ------------------------------------------------------------                             
+ANALISIS MATEMATICO                                          ANALISIS MATEMATICO                                                                      
+ANALISIS MATEMATICO                                          DIDACTICA DE LA MATEMATICA                                                               
+ANALISIS MATEMATICO                                          MATEMATICA APLICADA                                                                      
+ASTROFISICA                                                  ASTRONOMIA Y ASTROFISICA                                                                 
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION           CIENCIAS DE LA COMPUTACION E INTELIGENCIA ARTIFICIAL                                     
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION           ESTADISTICA E INVESTIGACION OPERATIVA                                                    
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION           LENGUAJES Y SISTEMAS INFORMATICOS                                                        
+MATEMATICA FUNDAMENTAL                                       ALGEBRA                                                                                  
+
+8 rows selected.
+
+SQL> SELECT D, AR
+  2  FROM DEPARTAMENTO, AREA
+  3  ORDER BY D ASC AND ORDER BY AR ASC;
+ORDER BY D ASC AND ORDER BY AR ASC
+               *
+ERROR at line 3:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> SELECT D, AR
+  2  SELECT D, AR
+  3  ;
+SELECT D, AR
+*
+ERROR at line 2:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> SELECT D, P
+  2  FROM DEPARTAMENTO, AREA, PROFESOR
+  3  WHERE DEPARTAMENTO.CD = AREA.CD AND AREA.CAR = PROFESOR.CAR
+  4  ORDER BY D, P ASC;
+
+D                                                            P                                                                                        
+------------------------------------------------------------ ------------------------------------------------------------                             
+ANALISIS MATEMATICO                                          ANGELA                                                                                   
+ANALISIS MATEMATICO                                          FRANCISCO                                                                                
+ANALISIS MATEMATICO                                          MARIO                                                                                    
+ASTROFISICA                                                  CARMEN                                                                                   
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION           CARLOS                                                                                   
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION           DAVID                                                                                    
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION           JOSE MANUEL                                                                              
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION           JUAN                                                                                     
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION           MARIA                                                                                    
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION           PEDRO                                                                                    
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION           SOLEDAD                                                                                  
+MATEMATICA FUNDAMENTAL                                       IVAN                                                                                     
+
+12 rows selected.
+
+SQL> SIIIIIIII JODER
+SP2-0734: unknown command beginning "SIIIIIIII ..." - rest of line ignored.
+SQL> SPOOL OFF
