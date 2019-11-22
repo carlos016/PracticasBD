@@ -1,0 +1,902 @@
+SQL> SELECT COUNT DISTINCT P
+  2  FROM DEPARTAMENTO, AREA, PROFESOR
+  3  WHERE DEPARTAMENTO.CD = AREA.CD AND PROFESOR.CAR = AREA.CD AND D LIKE '%ASTROFISICA%';
+SELECT COUNT DISTINCT P
+             *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> SELECT COUNT(DISTINCT P)
+  2  FROM DEPARTAMENTO, AREA, PROFESOR
+  3  WHERE DEPARTAMENTO.CD = AREA.CD AND AREA.CAR = PROFESOR.CAR AND D LIKE '%ASTROFISICA%';
+
+COUNT(DISTINCTP)                                                                
+----------------                                                                
+               1                                                                
+
+SQL> SELECT COUNT(DISTINCT P)
+  2  FROM DEPARTAMENTO, AREA, PROFESOR
+  3  WHERE DEPARTAMENTO.CD = AREA.CD AND AREA.CAR = PROFESOR.CAR AND D LIKE '%ASTROFISICA%';
+
+COUNT(DISTINCTP)                                                                
+----------------                                                                
+               1                                                                
+
+SQL> SELECT COUNT(DISTINCT P) AS PROFESORES-EN-ASTROFISICA
+  2  FROM DEPARTAMENTO, AREA, PROFESOR
+  3  WHERE DEPARTAMENTO.CD = AREA.CD AND AREA.CAR = PROFESOR.CAR AND D LIKE '%ASTROFISICA%';
+SELECT COUNT(DISTINCT P) AS PROFESORES-EN-ASTROFISICA
+                                      *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> SELECT COUNT(DISTINCT P) AS PROFESORESASTROFISICA
+  2  FROM DEPARTAMENTO, AREA, PROFESOR
+  3  WHERE DEPARTAMENTO.CD = AREA.CD AND AREA.CAR = PROFESOR.CAR AND D LIKE '%ASTROFISICA%';
+
+PROFESORESASTROFISICA                                                           
+---------------------                                                           
+                    1                                                           
+
+SQL> SELECT D, COUNT(DISTINCT P) AS PROFESORES
+  2  FROM DEPARTAMENTO, AREA, PROFESOR
+  3  WHERE DEPARTAMENTO.CD = AREA.CD AND AREA.CAR = PROFESOR.CAR;
+SELECT D, COUNT(DISTINCT P) AS PROFESORES
+       *
+ERROR at line 1:
+ORA-00937: not a single-group group function 
+
+
+SQL> SELECT D, COUNT(DISTINCT P) AS PROFESORES
+  2  FROM DEPARTAMENTO, AREA, PROFESOR
+  3  WHERE DEPARTAMENTO.CD = AREA.CD AND AREA.CAR = PROFESOR.CAR;
+SELECT D, COUNT(DISTINCT P) AS PROFESORES
+       *
+ERROR at line 1:
+ORA-00937: not a single-group group function 
+
+
+SQL> SELECT DEPARTAMENTO.D, COUNT(DISTINCT P) AS PROFESORES
+  2  FROM DEPARTAMENTO, AREA, PROFESOR
+  3  WHERE DEPARTAMENTO.CD = AREA.CD AND AREA.CAR = PROFESOR.CAR;
+SELECT DEPARTAMENTO.D, COUNT(DISTINCT P) AS PROFESORES
+       *
+ERROR at line 1:
+ORA-00937: not a single-group group function 
+
+
+SQL> SELECT DEPARTAMENTO.D, COUNT(DISTINCT P) AS PROFESORES
+  2  FROM DEPARTAMENTO, AREA, PROFESOR
+  3  WHERE DEPARTAMENTO.CD = AREA.CD AND AREA.CAR = PROFESOR.CAR;
+SELECT DEPARTAMENTO.D, COUNT(DISTINCT P) AS PROFESORES
+       *
+ERROR at line 1:
+ORA-00937: not a single-group group function 
+
+
+SQL> SELECT DEPARTAMENTO.D, COUNT(DISTINCT P) AS PROFESORES
+  2  FROM DEPARTAMENTO, AREA, PROFESOR
+  3  WHERE DEPARTAMENTO.CD = AREA.CD AND AREA.CAR = PROFESOR.CAR;
+SELECT DEPARTAMENTO.D, COUNT(DISTINCT P) AS PROFESORES
+       *
+ERROR at line 1:
+ORA-00937: not a single-group group function 
+
+
+SQL> SELECT D AS DEPARTAMENTO, COUNT(DISTINCT P) AS PROFESORES
+  2  FROM DEPARTAMENTO, AREA, PROFESOR
+  3  WHERE DEPARTAMENTO.CD = AREA.CD AND AREA.CAR = PROFESOR.CAR
+  4  GROUP BY D
+  5  ORDER BY D ASC;
+
+DEPARTAMENTO                                                 PROFESORES         
+------------------------------------------------------------ ----------         
+ANALISIS MATEMATICO                                                   3         
+ASTROFISICA                                                           1         
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION                    7         
+MATEMATICA FUNDAMENTAL                                                1         
+
+SQL> SELECT D AS DEPARTAMENTO, COUNT(DISTINCT P) AS PROFESORES
+  2  FROM DEPARTAMENTO, AREA, PROFESOR
+  3  WHERE DEPARTAMENTO.CD = AREA.CD AND AREA.CAR = PROFESOR.CAR
+  4  GROUP BY D
+  5  ORDER BY D DESC;
+
+DEPARTAMENTO                                                 PROFESORES         
+------------------------------------------------------------ ----------         
+MATEMATICA FUNDAMENTAL                                                1         
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION                    7         
+ASTROFISICA                                                           1         
+ANALISIS MATEMATICO                                                   3         
+
+SQL> HICE EL 8
+SP2-0042: unknown command "HICE EL 8" - rest of line ignored.
+SQL> SELECT COUNT(T)
+  2  FROM DEPARTAMENTO, AREA, ASIGNATURAS
+  3  WHERE DEPARTAMENTO.CD = AREA.CD AND AREA.CAR = ASIGNATURA.CAR AND D LIKE 'ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION';
+FROM DEPARTAMENTO, AREA, ASIGNATURAS
+                         *
+ERROR at line 2:
+ORA-00942: table or view does not exist 
+
+
+SQL> SELECT COUNT(DISTINCT T)
+  2  FROM DEPARTAMENTO, AREA, ASIGNATURAS
+  3  WHERE DEPARTAMENTO.CD = AREA.CD AND AREA.CAR = ASIGNATURA.CAR AND D LIKE 'ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION';
+FROM DEPARTAMENTO, AREA, ASIGNATURAS
+                         *
+ERROR at line 2:
+ORA-00942: table or view does not exist 
+
+
+SQL> SELECT COUNT(DISTINCT T)
+  2  FROM DEPARTAMENTO, AREA, ASIGNATURA
+  3  WHERE DEPARTAMENTO.CD = AREA.CD AND AREA.CAR = ASIGNATURA.CAR AND D LIKE 'ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION';
+
+COUNT(DISTINCTT)                                                                
+----------------                                                                
+               2                                                                
+
+SQL> SELECT COUNT(DISTINCT T) AS TITULACIONES
+  2  FROM DEPARTAMENTO, AREA, ASIGNATURA
+  3  WHERE DEPARTAMENTO.CD = AREA.CD AND AREA.CAR = ASIGNATURA.CAR AND D LIKE 'ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION';
+
+TITULACIONES                                                                    
+------------                                                                    
+           2                                                                    
+
+SQL> HICE EL 9
+SP2-0042: unknown command "HICE EL 9" - rest of line ignored.
+SQL> SELECT COUNT(DISTINCT P) AS PROFESORES_AREA_A
+  2  FROM DEPARTAMENTO, AREA, PROFESORES
+  3  WHERE DEPARTAMENTO.CD = AREA.CD AND AREA.CAR = PROFESOR.CAR AND AR LIKE 'A%';
+FROM DEPARTAMENTO, AREA, PROFESORES
+                         *
+ERROR at line 2:
+ORA-00942: table or view does not exist 
+
+
+SQL> SELECT COUNT(DISTINCT P) AS PROFESORES_AREA_A
+  2  FROM DEPARTAMENTO, AREA, PROFESOR
+  3  WHERE DEPARTAMENTO.CD = AREA.CD AND AREA.CAR = PROFESOR.CAR AND AR LIKE 'A%';
+
+PROFESORES_AREA_A                                                               
+-----------------                                                               
+                3                                                               
+
+SQL> SELECT COUNT(DISTINCT P) AS PROFESORES_AREA_A
+  2  FROM AREA, PROFESOR
+  3  WHERE AREA.CAR = PROFESOR.CAR AND AR LIKE 'A%';
+
+PROFESORES_AREA_A                                                               
+-----------------                                                               
+                3                                                               
+
+SQL> HICE LA 10
+SP2-0042: unknown command "HICE LA 10" - rest of line ignored.
+SQL> SELECT DISTINCT T AS TITULACIONES, COUNT(DISTINCT A) AS N_ASIGNATURAS
+  2  FROM ASIGNATURA
+  3  GROUP BY T
+  4  ORDER BY T ASC;
+
+TITU N_ASIGNATURAS                                                              
+---- -------------                                                              
+GF               1                                                              
+GII              7                                                              
+GM               2                                                              
+MII              2                                                              
+
+SQL> HICE LA 11
+SP2-0042: unknown command "HICE LA 11" - rest of line ignored.
+SQL> SELECT A
+  2  FROM ASIGNATURA
+  3  WHERE MAX(CT);
+WHERE MAX(CT)
+      *
+ERROR at line 3:
+ORA-00934: group function is not allowed here 
+
+
+SQL> SELECT A, MAX(CT)
+  2  FROM ASIGNATURA
+  3  ;
+SELECT A, MAX(CT)
+       *
+ERROR at line 1:
+ORA-00937: not a single-group group function 
+
+
+SQL> SELECT A, MAX(CT)
+  2  FROM ASIGNATURA
+  3  GROUP BY A;
+
+A                                                     MAX(CT)                   
+-------------------------------------------------- ----------                   
+ALGEBRA                                                     3                   
+BASES DE DATOS                                              3                   
+INFORMATICA BASICA                                          3                   
+OPTIMIZACION                                                3                   
+CALCULO                                                     3                   
+GESTION DE RIESGOS                                          3                   
+ENSENANZA DE LA MATEMATICA                                  6                   
+ANALISIS COMPLEJO                                         4.5                   
+INTELIGENCIA ARTIFICIAL                                   1.5                   
+MINERIA DE DATOS                                          1.5                   
+ALMACENES DE DATOS                                        1.5                   
+
+A                                                     MAX(CT)                   
+-------------------------------------------------- ----------                   
+ASTRONOMIA                                                  3                   
+
+12 rows selected.
+
+SQL> SELECT A AS ASINATURA_MAX_CT
+  2  FROM ASIGNATURA
+  3  WHERE CT = (SELECT MAX(CT) FROM ASIGNATURA);
+
+ASINATURA_MAX_CT                                                                
+--------------------------------------------------                              
+ENSENANZA DE LA MATEMATICA                                                      
+
+SQL> HICE LA 12
+SP2-0042: unknown command "HICE LA 12" - rest of line ignored.
+SQL> SELECT A AS ASINATURA_MIN_CT
+  2  FROM ASIGNATURA
+  3  WHERE CT = (SELECT MIN(CT) FROM ASIGNATURA);
+
+ASINATURA_MIN_CT                                                                
+--------------------------------------------------                              
+INTELIGENCIA ARTIFICIAL                                                         
+ALMACENES DE DATOS                                                              
+MINERIA DE DATOS                                                                
+
+SQL> HICE LA 13
+SP2-0042: unknown command "HICE LA 13" - rest of line ignored.
+SQL> SELECT A AS ASIGNATURA
+  2  FROM ASIGNATURA
+  3  ;
+
+ASIGNATURA                                                                      
+--------------------------------------------------                              
+BASES DE DATOS                                                                  
+INTELIGENCIA ARTIFICIAL                                                         
+ALMACENES DE DATOS                                                              
+MINERIA DE DATOS                                                                
+INFORMATICA BASICA                                                              
+ALGEBRA                                                                         
+CALCULO                                                                         
+OPTIMIZACION                                                                    
+GESTION DE RIESGOS                                                              
+ASTRONOMIA                                                                      
+ENSENANZA DE LA MATEMATICA                                                      
+
+ASIGNATURA                                                                      
+--------------------------------------------------                              
+ANALISIS COMPLEJO                                                               
+
+12 rows selected.
+
+SQL> SELECT A AS ASIGNATURA, (CT+CP+CL) AS CREDITOS_TOTALES
+  2  FROM ASIGNATURA;
+
+ASIGNATURA                                         CREDITOS_TOTALES             
+-------------------------------------------------- ----------------             
+BASES DE DATOS                                                    6             
+INTELIGENCIA ARTIFICIAL                                           6             
+ALMACENES DE DATOS                                                3             
+MINERIA DE DATOS                                                  3             
+INFORMATICA BASICA                                                6             
+ALGEBRA                                                           6             
+CALCULO                                                           6             
+OPTIMIZACION                                                      6             
+GESTION DE RIESGOS                                                6             
+ASTRONOMIA                                                        6             
+ENSENANZA DE LA MATEMATICA                                        6             
+
+ASIGNATURA                                         CREDITOS_TOTALES             
+-------------------------------------------------- ----------------             
+ANALISIS COMPLEJO                                               7.5             
+
+12 rows selected.
+
+SQL> SELECT A AS ASIGNATURA, (CT+CP+CL) AS CREDITOS_TOTALES
+  2  FROM ASIGNATURA;
+
+ASIGNATURA                                         CREDITOS_TOTALES             
+-------------------------------------------------- ----------------             
+BASES DE DATOS                                                    6             
+INTELIGENCIA ARTIFICIAL                                           6             
+ALMACENES DE DATOS                                                3             
+MINERIA DE DATOS                                                  3             
+INFORMATICA BASICA                                                6             
+ALGEBRA                                                           6             
+CALCULO                                                           6             
+OPTIMIZACION                                                      6             
+GESTION DE RIESGOS                                                6             
+ASTRONOMIA                                                        6             
+ENSENANZA DE LA MATEMATICA                                        6             
+
+ASIGNATURA                                         CREDITOS_TOTALES             
+-------------------------------------------------- ----------------             
+ANALISIS COMPLEJO                                               7.5             
+
+12 rows selected.
+
+SQL> SET PAGESIZE 250
+SQL> SET LINESIZE 150
+SQL> SELECT A AS ASIGNATURA, (CT+CP+CL) AS CREDITOS_TOTALES
+  2  FROM ASIGNATURA;
+
+ASIGNATURA                                         CREDITOS_TOTALES                                                                                   
+-------------------------------------------------- ----------------                                                                                   
+BASES DE DATOS                                                    6                                                                                   
+INTELIGENCIA ARTIFICIAL                                           6                                                                                   
+ALMACENES DE DATOS                                                3                                                                                   
+MINERIA DE DATOS                                                  3                                                                                   
+INFORMATICA BASICA                                                6                                                                                   
+ALGEBRA                                                           6                                                                                   
+CALCULO                                                           6                                                                                   
+OPTIMIZACION                                                      6                                                                                   
+GESTION DE RIESGOS                                                6                                                                                   
+ASTRONOMIA                                                        6                                                                                   
+ENSENANZA DE LA MATEMATICA                                        6                                                                                   
+ANALISIS COMPLEJO                                               7.5                                                                                   
+
+12 rows selected.
+
+SQL> SELECT A AS ASINATURA_MAS_CRED
+  2  FROM ASIGNATURA
+  3  WHERE (CT+CP+CL) = (SELECT MAX(CT+CP+CL) FROM ASIGNATURA);
+
+ASINATURA_MAS_CRED                                                                                                                                    
+--------------------------------------------------                                                                                                    
+ANALISIS COMPLEJO                                                                                                                                     
+
+SQL> HICE LA 15
+SP2-0042: unknown command "HICE LA 15" - rest of line ignored.
+SQL> SELECT A AS ASINATURA_MENOS_CRED
+  2  FROM ASIGNATURA
+  3  WHERE (CT+CP+CL) = (SELECT MIN(CT+CP+CL) FROM ASIGNATURA);
+
+ASINATURA_MENOS_CRED                                                                                                                                  
+--------------------------------------------------                                                                                                    
+ALMACENES DE DATOS                                                                                                                                    
+MINERIA DE DATOS                                                                                                                                      
+
+SQL> HICE LA 16
+SP2-0042: unknown command "HICE LA 16" - rest of line ignored.
+SQL> SELECT AR AS AREA_ASIG_MAS_CRED
+  2  FROM AREA, ASIGNATURA
+  3  WHERE (CT+CP+CL) = (SELECT MAX(CT+CP+CL) FROM ASIGNATURA);
+
+AREA_ASIG_MAS_CRED                                                                                                                                    
+------------------------------------------------------------                                                                                          
+ALGEBRA                                                                                                                                               
+ANALISIS MATEMATICO                                                                                                                                   
+ASTRONOMIA Y ASTROFISICA                                                                                                                              
+CIENCIAS DE LA COMPUTACION E INTELIGENCIA ARTIFICIAL                                                                                                  
+DIDACTICA DE LA MATEMATICA                                                                                                                            
+ESTADISTICA E INVESTIGACION OPERATIVA                                                                                                                 
+LENGUAJES Y SISTEMAS INFORMATICOS                                                                                                                     
+MATEMATICA APLICADA                                                                                                                                   
+
+8 rows selected.
+
+SQL> SELECT AR AS AREA_ASIG_MAS_CRED
+  2  FROM AREA, ASIGNATURA
+  3  WHERE AREA.CAR = ASIGNATURA.CAR AND (CT+CP+CL) = (SELECT MAX(CT+CP+CL) FROM ASIGNATURA);
+
+AREA_ASIG_MAS_CRED                                                                                                                                    
+------------------------------------------------------------                                                                                          
+ANALISIS MATEMATICO                                                                                                                                   
+
+SQL> HICE LA 17
+SP2-0042: unknown command "HICE LA 17" - rest of line ignored.
+SQL> SELECT COUNT(DISTINCT CAS) AS ASIG_PROF_1111
+  2  FROM PLAN_DOCENTE;
+
+ASIG_PROF_1111                                                                                                                                        
+--------------                                                                                                                                        
+            12                                                                                                                                        
+
+SQL> SELECT COUNT(DISTINCT CAS) AS ASIG_PROF_1111
+  2  FROM PLAN_DOCENTE
+  3  WHERE DNI = 1111;
+
+ASIG_PROF_1111                                                                                                                                        
+--------------                                                                                                                                        
+             1                                                                                                                                        
+
+SQL> HICE LA 18
+SP2-0042: unknown command "HICE LA 18" - rest of line ignored.
+SQL> SELECT (CTA+CPA+CLA) AS CRED_PROF_1111
+  2  FROM PLAN_DOCENTE
+  3  WHERE DNI = 1111;
+
+CRED_PROF_1111                                                                                                                                        
+--------------                                                                                                                                        
+             6                                                                                                                                        
+             3                                                                                                                                        
+
+SQL> SELECT (SUM(CTA+CPA+CLA)) AS CRED_PROF_1111
+  2  FROM PLAN_DOCENTE
+  3  WHERE DNI = 1111
+  4  ;
+
+CRED_PROF_1111                                                                                                                                        
+--------------                                                                                                                                        
+             9                                                                                                                                        
+
+SQL> SELECT (SUM(CTA+CPA+CLA)) AS CRED_PROF_1111
+  2  FROM PLAN_DOCENTE
+  3  WHERE DNI = 1111;
+
+CRED_PROF_1111                                                                                                                                        
+--------------                                                                                                                                        
+             9                                                                                                                                        
+
+SQL> HICE LA 19
+SP2-0042: unknown command "HICE LA 19" - rest of line ignored.
+SQL> SELECT P AS PROF_MAS_CRED_ACT
+  2  FROM PLAN_DOCENTE, PROFESOR
+  3  WHERE PLAN_DOCENTE.DNI = PROFESOR.DNI AND FF IS NULL AND SUM(CTA+CPA+CLA) = (SELECT SUM(CTA+CPA+CLA) FROM PLAN_DOCENTE);
+WHERE PLAN_DOCENTE.DNI = PROFESOR.DNI AND FF IS NULL AND SUM(CTA+CPA+CLA) = (SELECT SUM(CTA+CPA+CLA) FROM PLAN_DOCENTE)
+                                                         *
+ERROR at line 3:
+ORA-00934: group function is not allowed here 
+
+
+SQL> SELECT P AS PROF_MAS_CRED_ACT
+  2  FROM PLAN_DOCENTE, PROFESOR
+  3  WHERE PLAN_DOCENTE.DNI = PROFESOR.DNI AND FF IS NULL AND (SELECT SUM(CTA+CPA+CLA) FROM PLAN_DOCENTE) = (SELECT MAX(SUM(CTA+CPA+CLA)) FROM PLAN_DOCENTE);
+WHERE PLAN_DOCENTE.DNI = PROFESOR.DNI AND FF IS NULL AND (SELECT SUM(CTA+CPA+CLA) FROM PLAN_DOCENTE) = (SELECT MAX(SUM(CTA+CPA+CLA)) FROM PLAN_DOCENTE)
+                                                                                                                   *
+ERROR at line 3:
+ORA-00978: nested group function without GROUP BY 
+
+
+SQL> SELECT P AS PROF_MAS_CRED_ACT
+  2  FROM PLAN_DOCENTE, PROFESOR
+  3  WHERE PLAN_DOCENTE.DNI = PROFESOR.DNI AND FF IS NULL AND (SELECT SUM(CTA+CPA+CLA) FROM PLAN_DOCENTE) = (SELECT MAX(SUM(CTA+CPA+CLA)) FROM PLAN_DOCENTE)
+  4  GROUP BY P;
+WHERE PLAN_DOCENTE.DNI = PROFESOR.DNI AND FF IS NULL AND (SELECT SUM(CTA+CPA+CLA) FROM PLAN_DOCENTE) = (SELECT MAX(SUM(CTA+CPA+CLA)) FROM PLAN_DOCENTE)
+                                                                                                                   *
+ERROR at line 3:
+ORA-00978: nested group function without GROUP BY 
+
+
+SQL> SELECT P AS PROF_MAS_CRED_ACT
+  2  FROM PLAN_DOCENTE, PROFESOR
+  3  WHERE PLAN_DOCENTE.DNI = PROFESOR.DNI AND FF IS NULL AND (SELECT SUM(CTA+CPA+CLA) FROM PLAN_DOCENTE) = (SELECT MAX(SUM(CTA+CPA+CLA)) FROM PLAN_DOCENTE GROUP BY (CTA+CPA+CLA));
+
+no rows selected
+
+SQL> CREATE VIEW PROF_MAS_CRED_ACT
+  2  A
+  3  ;
+A
+*
+ERROR at line 2:
+ORA-00905: missing keyword 
+
+
+SQL> SELECT DNI, MAX(SUM(CTA+CPA+CLA)) AS CRED_TOTAL_ASIG
+  2  FROM PLAN_DOCENTE
+  3  WHERE FF IS NULL;
+SELECT DNI, MAX(SUM(CTA+CPA+CLA)) AS CRED_TOTAL_ASIG
+                *
+ERROR at line 1:
+ORA-00978: nested group function without GROUP BY 
+
+
+SQL> SELECT DNI, MAX(SUM(CTA+CPA+CLA)) AS CRED_TOTAL_ASIG
+  2  FROM PLAN_DOCENTE
+  3  WHERE FF IS NULL
+  4  ORDER BY DNI
+  5  GROUP BY
+  6  ;
+GROUP BY
+*
+ERROR at line 5:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> SELECT DNI, MAX(SUM(CTA+CPA+CLA)) AS CRED_TOTAL_ASIG
+  2  FROM PLAN_DOCENTE
+  3  GROUP BY DNI
+  4  ORDER BY DNI ASC;
+SELECT DNI, MAX(SUM(CTA+CPA+CLA)) AS CRED_TOTAL_ASIG
+       *
+ERROR at line 1:
+ORA-00937: not a single-group group function 
+
+
+SQL> SELECT DNI, MAX(SUM(CTA+CPA+CLA)) AS CRED_TOTAL_ASIG
+  2  FROM PLAN_DOCENTE
+  3  GROUP BY DNI
+  4  ;
+SELECT DNI, MAX(SUM(CTA+CPA+CLA)) AS CRED_TOTAL_ASIG
+       *
+ERROR at line 1:
+ORA-00937: not a single-group group function 
+
+
+SQL> SELECT MAX(SUM(CTA+CPA+CLA)) AS CRED_TOTAL_ASIG
+  2  FROM PLAN_DOCENTE
+  3  GROUP BY DNI;
+
+CRED_TOTAL_ASIG                                                                                                                                       
+---------------                                                                                                                                       
+             15                                                                                                                                       
+
+SQL> SELECT DNI, SUM(CTA+CPA+CLA) AS CRED_TOTAL_ASIG
+  2  FROM PLAN_DOCENTE
+  3  GROUP BY DNI;
+
+       DNI CRED_TOTAL_ASIG                                                                                                                            
+---------- ---------------                                                                                                                            
+      2222               6                                                                                                                            
+      9999               6                                                                                                                            
+      6666               6                                                                                                                            
+      4444              12                                                                                                                            
+      1111               9                                                                                                                            
+      7777             7.5                                                                                                                            
+      3333               9                                                                                                                            
+      3030               3                                                                                                                            
+      8888               6                                                                                                                            
+      1010              15                                                                                                                            
+      2020               3                                                                                                                            
+      5555               6                                                                                                                            
+
+12 rows selected.
+
+SQL> SELECT DNI, SUM(CTA+CPA+CLA) AS CRED_TOTAL_ASIG
+  2  FROM PLAN_DOCENTE
+  3  GROUP BY DNI
+  4  ORDER BY DNI ASC;
+
+       DNI CRED_TOTAL_ASIG                                                                                                                            
+---------- ---------------                                                                                                                            
+      1010              15                                                                                                                            
+      1111               9                                                                                                                            
+      2020               3                                                                                                                            
+      2222               6                                                                                                                            
+      3030               3                                                                                                                            
+      3333               9                                                                                                                            
+      4444              12                                                                                                                            
+      5555               6                                                                                                                            
+      6666               6                                                                                                                            
+      7777             7.5                                                                                                                            
+      8888               6                                                                                                                            
+      9999               6                                                                                                                            
+
+12 rows selected.
+
+SQL> SELECT DNI, SUM(CTA+CPA+CLA) AS CRED_TOTAL_ASIG
+  2  FROM PLAN_DOCENTE
+  3  WHERE FF IS NULL
+  4  GROUP BY DNI
+  5  ORDER BY DNI ASC;
+
+       DNI CRED_TOTAL_ASIG                                                                                                                            
+---------- ---------------                                                                                                                            
+      1010               3                                                                                                                            
+      1111               3                                                                                                                            
+      2020               3                                                                                                                            
+      2222               3                                                                                                                            
+      3030               3                                                                                                                            
+      3333               9                                                                                                                            
+      4444               9                                                                                                                            
+      5555               6                                                                                                                            
+      7777             7.5                                                                                                                            
+      8888               6                                                                                                                            
+      9999               6                                                                                                                            
+
+11 rows selected.
+
+SQL> CREATE VIEW TOTAL_CRED_PROF_ACT AS
+  2  SELECT DNI, SUM(CTA+CPA+CLA) AS CRED_TOTAL_ASIG
+  3  FROM PLAN_DOCENTE
+  4  WHERE FF IS NULL
+  5  GROUP BY DNI
+  6  ORDER BY DNI ASC;
+
+View created.
+
+SQL> SELECT P AS PROF_MAS_CRED_AC
+  2  FROM PROFESOR, TOTAL_CRED_PROF_ACT
+  3  WHERE PROFESOR.DNI = TOTAL_CRED_PROF_ACT.DNI;
+
+PROF_MAS_CRED_AC                                                                                                                                      
+------------------------------------------------------------                                                                                          
+DAVID                                                                                                                                                 
+JUAN                                                                                                                                                  
+SOLEDAD                                                                                                                                               
+CARLOS                                                                                                                                                
+JOSE MANUEL                                                                                                                                           
+PEDRO                                                                                                                                                 
+MARIA                                                                                                                                                 
+IVAN                                                                                                                                                  
+MARIO                                                                                                                                                 
+FRANCISCO                                                                                                                                             
+ANGELA                                                                                                                                                
+
+11 rows selected.
+
+SQL> SELECT P AS PROF_MAS_CRED_AC
+  2  FROM PROFESOR, TOTAL_CRED_PROF_ACT
+  3  WHERE PROFESOR.DNI = TOTAL_CRED_PROF_ACT.DNI CRED_TOTAL_ASIG = (SELECT MAX() FROM PROF_MAS;
+WHERE PROFESOR.DNI = TOTAL_CRED_PROF_ACT.DNI CRED_TOTAL_ASIG = (SELECT MAX() FROM PROF_MAS
+                                             *
+ERROR at line 3:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> SELECT P AS PROF_MAS_CRED_AC
+  2  FROM PROFESOR, TOTAL_CRED_PROF_ACT
+  3  WHERE PROFESOR.DNI = TOTAL_CRED_PROF_ACT.DNI CRED_TOTAL_ASIG = (SELECT MAX(CRED_TOTAL_ASIG) FROM TOTAL_CRED_PROF_ACT);
+WHERE PROFESOR.DNI = TOTAL_CRED_PROF_ACT.DNI CRED_TOTAL_ASIG = (SELECT MAX(CRED_TOTAL_ASIG) FROM TOTAL_CRED_PROF_ACT)
+                                             *
+ERROR at line 3:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> SELECT P AS PROF_MAS_CRED_AC
+  2  FROM PROFESOR, TOTAL_CRED_PROF_ACT
+  3  WHERE PROFESOR.DNI = TOTAL_CRED_PROF_ACT.DNI AND CRED_TOTAL_ASIG = (SELECT MAX(CRED_TOTAL_ASIG) FROM TOTAL_CRED_PROF_ACT);
+
+PROF_MAS_CRED_AC                                                                                                                                      
+------------------------------------------------------------                                                                                          
+PEDRO                                                                                                                                                 
+MARIA                                                                                                                                                 
+
+SQL> HICE LA 20
+SP2-0042: unknown command "HICE LA 20" - rest of line ignored.
+SQL> SELECT AVG(COUNT(DISTINCT A))
+  2  FROM AREA, ASIGNATURA
+  3  WHERE AREA.CAR = ASIGNATURA.CAR;
+SELECT AVG(COUNT(DISTINCT A))
+           *
+ERROR at line 1:
+ORA-00978: nested group function without GROUP BY 
+
+
+SQL> SELECT AVG(COUNT(DISTINCT A))
+  2  FROM AREA, ASIGNATURA
+  3  WHERE AREA.CAR = ASIGNATURA.CAR
+  4  GROUP BY AR;
+
+AVG(COUNT(DISTINCTA))                                                                                                                                 
+---------------------                                                                                                                                 
+                  1.5                                                                                                                                 
+
+SQL> SELECT AVG(COUNT(DISTINCT A)) AS MEDIA_ASG_AREA
+  2  FROM AREA, ASIGNATURA
+  3  WHERE AREA.CAR = ASIGNATURA.CAR
+  4  GROUP BY AR;
+
+MEDIA_ASG_AREA                                                                                                                                        
+--------------                                                                                                                                        
+           1.5                                                                                                                                        
+
+SQL> HICE LA 21
+SP2-0042: unknown command "HICE LA 21" - rest of line ignored.
+SQL> SELECT AVG(COUNT(DISTINCT P))
+  2  FROM DEPARTAMENTO, AREA, PROFESOR
+  3  WHERE DEPARTAMENTO.CD = AREA.CD AND AREA.CAR = PROFESOR.CAR
+  4  GROUP BY D;
+
+AVG(COUNT(DISTINCTP))                                                                                                                                 
+---------------------                                                                                                                                 
+                    3                                                                                                                                 
+
+SQL> SELECT AVG(COUNT(DISTINCT P)) AS MEDIA_PROF_DEP
+  2  FROM DEPARTAMENTO, AREA, PROFESOR
+  3  WHERE DEPARTAMENTO.CD = AREA.CD AND AREA.CAR = PROFESOR.CAR
+  4  GROUP BY D;
+
+MEDIA_PROF_DEP                                                                                                                                        
+--------------                                                                                                                                        
+             3                                                                                                                                        
+
+SQL> HICE LA 2
+SP2-0042: unknown command "HICE LA 2" - rest of line ignored.
+SQL> HICE LA 22
+SP2-0042: unknown command "HICE LA 22" - rest of line ignored.
+SQL> SELECT AR AS AREAS, COUNT(DISNTINCT A) AS N_ASIGNATURAS
+  2  FROM AREA, ASIGNATURA
+  3  WHERE AREA.CAR = ASIGNATURA.CAR;
+SELECT AR AS AREAS, COUNT(DISNTINCT A) AS N_ASIGNATURAS
+                                    *
+ERROR at line 1:
+ORA-00907: missing right parenthesis 
+
+
+SQL> SELECT AR AS AREAS, COUNT(DISTINCT A) AS N_ASIGNATURAS
+  2  FROM AREA, ASIGNATURA
+  3  WHERE AREA.CAR = ASIGNATURA.CAR;
+SELECT AR AS AREAS, COUNT(DISTINCT A) AS N_ASIGNATURAS
+       *
+ERROR at line 1:
+ORA-00937: not a single-group group function 
+
+
+SQL> SELECT AR AS AREAS, COUNT(DISTINCT A) AS N_ASIGNATURAS
+  2  FROM AREA, ASIGNATURA
+  3  WHERE AREA.CAR = ASIGNATURA.CAR
+  4  GROUP BY AR;
+
+AREAS                                                        N_ASIGNATURAS                                                                            
+------------------------------------------------------------ -------------                                                                            
+ALGEBRA                                                                  1                                                                            
+ASTRONOMIA Y ASTROFISICA                                                 1                                                                            
+CIENCIAS DE LA COMPUTACION E INTELIGENCIA ARTIFICIAL                     2                                                                            
+ESTADISTICA E INVESTIGACION OPERATIVA                                    1                                                                            
+ANALISIS MATEMATICO                                                      1                                                                            
+LENGUAJES Y SISTEMAS INFORMATICOS                                        4                                                                            
+DIDACTICA DE LA MATEMATICA                                               1                                                                            
+MATEMATICA APLICADA                                                      1                                                                            
+
+8 rows selected.
+
+SQL> SELECT AR AS AREAS, COUNT(DISTINCT A) AS N_ASIGNATURAS
+  2  FROM AREA, ASIGNATURA
+  3  WHERE AREA.CAR = ASIGNATURA.CAR AND 3 < COUNT(DISTINCT P)
+  4  GROUP BY AR;
+WHERE AREA.CAR = ASIGNATURA.CAR AND 3 < COUNT(DISTINCT P)
+                                        *
+ERROR at line 3:
+ORA-00934: group function is not allowed here 
+
+
+SQL> CREATE VIEW ASIGNATURAS_AREA AS
+  2  SELECT AR AS AREAS, COUNT(DISTINCT A) AS N_ASIGNATURAS
+  3  FROM AREA, ASIGNATURA
+  4  WHERE AREA.CAR = ASIGNATURA.CAR
+  5  GROUP BY AR;
+
+View created.
+
+SQL> SELECT AREAS
+  2  ;
+
+*
+ERROR at line 2:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> SELECT AREAS AS AREAS_CON_MAS_3_ASIG
+  2  FROM ASIGNATURAS_AREA
+  3  WHERE N_ASIGNATURAS > 3;
+
+AREAS_CON_MAS_3_ASIG                                                                                                                                  
+------------------------------------------------------------                                                                                          
+LENGUAJES Y SISTEMAS INFORMATICOS                                                                                                                     
+
+SQL> HICE LA 23
+SP2-0042: unknown command "HICE LA 23" - rest of line ignored.
+SQL> SELECT AREAS AS AREAS_CON_MAS_3_ASIG
+  2  FROM ASIGNATURAS_AREA
+  3  WHERE N_ASIGNATURAS > 6;
+
+no rows selected
+
+SQL> HICE LA 24
+SP2-0042: unknown command "HICE LA 24" - rest of line ignored.
+SQL> SELECT P AS PROFESORES
+  2  FROM DEPARTAMENTO, AREA, PROFESOR
+  3  WHERE DEPARTAMENTO.CD = AREA.CD AND AREA.CAR = PROFESOR.CAR;
+
+PROFESORES                                                                                                                                            
+------------------------------------------------------------                                                                                          
+IVAN                                                                                                                                                  
+MARIO                                                                                                                                                 
+CARMEN                                                                                                                                                
+DAVID                                                                                                                                                 
+PEDRO                                                                                                                                                 
+FRANCISCO                                                                                                                                             
+JUAN                                                                                                                                                  
+JOSE MANUEL                                                                                                                                           
+CARLOS                                                                                                                                                
+MARIA                                                                                                                                                 
+SOLEDAD                                                                                                                                               
+ANGELA                                                                                                                                                
+
+12 rows selected.
+
+SQL> SELECT D AS DEPARTAMENTO_MENOS_PROF
+  2  FROM DEPARTAMENTO, AREA, PROFESOR
+  3  WHERE DEPARTAMENTO.CD = AREA.CD AND AREA.CAR = PROFESOR.CAR;
+
+DEPARTAMENTO_MENOS_PROF                                                                                                                               
+------------------------------------------------------------                                                                                          
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION                                                                                                    
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION                                                                                                    
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION                                                                                                    
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION                                                                                                    
+MATEMATICA FUNDAMENTAL                                                                                                                                
+ASTROFISICA                                                                                                                                           
+ANALISIS MATEMATICO                                                                                                                                   
+ANALISIS MATEMATICO                                                                                                                                   
+ANALISIS MATEMATICO                                                                                                                                   
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION                                                                                                    
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION                                                                                                    
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION                                                                                                    
+
+12 rows selected.
+
+SQL> SELECT DISTINCT D, MIN(COUNT(DISTINCT P))
+  2  FROM DEPARTAMENTO, AREA, PROFESOR
+  3  WHERE DEPARTAMENTO.CD = AREA.CD AND AREA.CAR = PROFESOR.CAR
+  4  GROUP BY D;
+SELECT DISTINCT D, MIN(COUNT(DISTINCT P))
+                *
+ERROR at line 1:
+ORA-00937: not a single-group group function 
+
+
+SQL> SELECT MIN(COUNT(DISTINCT P))
+  2  FROM DEPARTAMENTO, AREA, PROFESOR
+  3  WHERE DEPARTAMENTO.CD = AREA.CD AND AREA.CAR = PROFESOR.CAR
+  4  ;
+SELECT MIN(COUNT(DISTINCT P))
+           *
+ERROR at line 1:
+ORA-00978: nested group function without GROUP BY 
+
+
+SQL> SELECT MIN(COUNT(DISTINCT P))
+  2  FROM DEPARTAMENTO, AREA, PROFESOR
+  3  WHERE DEPARTAMENTO.CD = AREA.CD AND AREA.CAR = PROFESOR.CAR
+  4  GROUP BY D;
+
+MIN(COUNT(DISTINCTP))                                                                                                                                 
+---------------------                                                                                                                                 
+                    1                                                                                                                                 
+
+SQL> LIST VIEWS
+SP2-0224: invalid starting line number
+SQL> SELECT DISTINCT D AS DEP, COUNT(DISTINCT P) AS N_PROF
+  2  FROM DEPARTAMENTO, AREA, PROFESOR
+  3  WHERE DEPARTAMENTO.CD = AREA.CD AND AREA.CAR = PROFESOR.CAR
+  4  GROUP BY D;
+
+DEP                                                              N_PROF                                                                               
+------------------------------------------------------------ ----------                                                                               
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION                    7                                                                               
+ASTROFISICA                                                           1                                                                               
+ANALISIS MATEMATICO                                                   3                                                                               
+MATEMATICA FUNDAMENTAL                                                1                                                                               
+
+SQL> CREATE VIEW N_PROF_DEP
+  2  AS SELECT DISTINCT D AS DEP, COUNT(DISTINCT P) AS N_PROF
+  3  FROM DEPARTAMENTO, AREA, PROFESOR
+  4  WHERE DEPARTAMENTO.CD = AREA.CD AND AREA.CAR = PROFESOR.CAR
+  5  GROUP BY D;
+
+View created.
+
+SQL> SELECT DEP AS DEP_MENOS_PROF
+  2  FROM N_PROF_DEP
+  3  WHER
+  4  WHER;
+WHER
+*
+ERROR at line 4:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> SELECT DEP AS DEP_MENOS_PROF
+  2  FROM N_PROF_DEP
+  3  WHERE N_PROF = (SELECT MIN(N_PROF) FROM N_PROF_DEP);
+
+DEP_MENOS_PROF                                                                                                                                        
+------------------------------------------------------------                                                                                          
+ASTROFISICA                                                                                                                                           
+MATEMATICA FUNDAMENTAL                                                                                                                                
+
+SQL> HICE LA 25
+SP2-0042: unknown command "HICE LA 25" - rest of line ignored.
+SQL> SPOOL OFF
