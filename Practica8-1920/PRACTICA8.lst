@@ -1,0 +1,937 @@
+SQL> SET PAGESIZE 250
+SQL> SET LINESIZE 150
+SQL> CREATE TABLE TITULACION
+  2  (T CHAR(4) PRIMARY KEY NOT NULL,
+  3  FAC VARCHAR2(50));
+
+Table created.
+
+SQL> DESCRIBE TITULACION;
+ Name                                                                                Null?    Type
+ ----------------------------------------------------------------------------------- -------- --------------------------------------------------------
+ T                                                                                   NOT NULL CHAR(4)
+ FAC                                                                                          VARCHAR2(50)
+
+SQL> HICE LA 1
+SP2-0042: unknown command "HICE LA 1" - rest of line ignored.
+SQL> INSERT INTO TITULACION
+  2  (T)
+  3  SELECT DISTINCT T
+  4  FROM ASIGNATURA;
+
+4 rows created.
+
+SQL> SELECT *
+  2  FROM TITULACION
+  3  ;
+
+T    FAC                                                                                                                                              
+---- --------------------------------------------------                                                                                               
+GF                                                                                                                                                    
+GM                                                                                                                                                    
+GII                                                                                                                                                   
+MII                                                                                                                                                   
+
+SQL> HICE LA 2 Y 3
+SP2-0734: unknown command beginning "HICE LA 2 ..." - rest of line ignored.
+SQL> UPDATE TABLE TITULACION
+  2  SET FAC = 'ESCUELA SUPERIOR DE INGENIERIA Y TECNOLOGIA'
+  3  WHERE T IN ('MII','GII');
+UPDATE TABLE TITULACION
+       *
+ERROR at line 1:
+ORA-00903: invalid table name 
+
+
+SQL> UPDATE TITULACION
+  2  SET FAC = 'ESCUELA SUPERIOR DE INGENIERIA Y TECNOLOGIA'
+  3  WHERE T IN ('MII','GII');
+
+2 rows updated.
+
+SQL> SELECT *
+  2  UPDATE TITULACION;
+UPDATE TITULACION
+*
+ERROR at line 2:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> SELECT *
+  2  FROM TITULACION;
+
+T    FAC                                                                                                                                              
+---- --------------------------------------------------                                                                                               
+GF                                                                                                                                                    
+GM                                                                                                                                                    
+GII  ESCUELA SUPERIOR DE INGENIERIA Y TECNOLOGIA                                                                                                      
+MII  ESCUELA SUPERIOR DE INGENIERIA Y TECNOLOGIA                                                                                                      
+
+SQL> UPDATE TITULACION
+  2  SET FAC = 'FACULTAD DE CIENCIAS'
+  3  WHERE T IN ('GF','GM');
+
+2 rows updated.
+
+SQL> HICE LA 4
+SP2-0042: unknown command "HICE LA 4" - rest of line ignored.
+SQL> CREATE SYNONYM TIT
+  2  FOR TITULACION;
+CREATE SYNONYM TIT
+               *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> DROP SYNONYM TIT;
+
+Synonym dropped.
+
+SQL> CREATE SYNONYM TIT
+  2  FOR TITULACION;
+
+Synonym created.
+
+SQL> HICE LA 5
+SP2-0042: unknown command "HICE LA 5" - rest of line ignored.
+SQL> SELECT *
+  2  FROM TIT;
+
+T    FAC                                                                                                                                              
+---- --------------------------------------------------                                                                                               
+GF   FACULTAD DE CIENCIAS                                                                                                                             
+GM   FACULTAD DE CIENCIAS                                                                                                                             
+GII  ESCUELA SUPERIOR DE INGENIERIA Y TECNOLOGIA                                                                                                      
+MII  ESCUELA SUPERIOR DE INGENIERIA Y TECNOLOGIA                                                                                                      
+
+SQL> HICE LA 6
+SP2-0042: unknown command "HICE LA 6" - rest of line ignored.
+SQL> ALTER TABLE ASIGNATURA
+  2  ADD CONSTRAINT FK_ASIGNATURA_TITULACION FOREIGN KEY (T)
+  3  REFERENCES TITULACION (T)
+  4  ON DELETE CASCADE;
+
+Table altered.
+
+SQL> HICE LA 7
+SP2-0042: unknown command "HICE LA 7" - rest of line ignored.
+SQL> ALTER TABLE TITULACION
+  2  MODIFY T CHAR(6);
+ALTER TABLE TITULACION
+*
+ERROR at line 1:
+ORA-02292: integrity constraint (ALU0100898026.FK_ASIGNATURA_TITULACION) violated - child record found 
+
+
+SQL> ALTER TABLE ASIGNATURA
+  2  DISABLE CONSTRAINT FK_ASIGNATURA_TITULACION;
+
+Table altered.
+
+SQL> ALTER TABLE TITULACION
+  2  MODIFY T CHAR(6);
+
+Table altered.
+
+SQL> ALTER TABLE ASIGNATURA
+  2  ENABLE CONSTRAINT FK_ASIGNATURA_TITULACION;
+
+Table altered.
+
+SQL> DESCRIBE TITULACION;
+ Name                                                                                Null?    Type
+ ----------------------------------------------------------------------------------- -------- --------------------------------------------------------
+ T                                                                                   NOT NULL CHAR(6)
+ FAC                                                                                          VARCHAR2(50)
+
+SQL> HICE LA 8
+SP2-0042: unknown command "HICE LA 8" - rest of line ignored.
+SQL> DESCRIBE ASIGNATURA;
+ Name                                                                                Null?    Type
+ ----------------------------------------------------------------------------------- -------- --------------------------------------------------------
+ CAS                                                                                 NOT NULL NUMBER(3)
+ A                                                                                   NOT NULL VARCHAR2(50)
+ T                                                                                   NOT NULL CHAR(4)
+ CUR                                                                                          NUMBER(1)
+ CAR                                                                                          NUMBER(3)
+ CT                                                                                           NUMBER(3,1)
+ CP                                                                                           NUMBER(3,1)
+ CL                                                                                           NUMBER(3,1)
+
+SQL> SELECT *
+  2  FROM ASIGNATURA;
+
+       CAS A                                                  T           CUR        CAR         CT         CP         CL                             
+---------- -------------------------------------------------- ---- ---------- ---------- ---------- ---------- ----------                             
+         1 BASES DE DATOS                                     GII           3          7          3        1.5        1.5                             
+         2 INTELIGENCIA ARTIFICIAL                            GII           3          4        1.5        1.5          3                             
+         3 ALMACENES DE DATOS                                 MII           1          7        1.5          0        1.5                             
+         4 MINERIA DE DATOS                                   MII           1          7        1.5          0        1.5                             
+         5 INFORMATICA BASICA                                 GII           1          7          3        1.5        1.5                             
+         6 ALGEBRA                                            GII           1          1          3          3          0                             
+         7 CALCULO                                            GII           1          8          3          3          0                             
+         8 OPTIMIZACION                                       GII           1          6          3        1.5        1.5                             
+         9 GESTION DE RIESGOS                                 GII           3          4          3          0          3                             
+        10 ASTRONOMIA                                         GF            2          3          3        1.5        1.5                             
+        11 ENSENANZA DE LA MATEMATICA                         GM            2          5          6          0          0                             
+        12 ANALISIS COMPLEJO                                  GM            4          2        4.5          3          0                             
+
+12 rows selected.
+
+SQL> CREATE VIEW VISTA1
+  2  AS SELECT CAS, A, T, CUR, CAR
+  3  FROM ASIGNATURA;
+
+View created.
+
+SQL> HICE LA 9
+SP2-0042: unknown command "HICE LA 9" - rest of line ignored.
+SQL> SELECT *
+  2  FROM VISTA1;
+
+       CAS A                                                  T           CUR        CAR                                                              
+---------- -------------------------------------------------- ---- ---------- ----------                                                              
+         1 BASES DE DATOS                                     GII           3          7                                                              
+         2 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+         3 ALMACENES DE DATOS                                 MII           1          7                                                              
+         4 MINERIA DE DATOS                                   MII           1          7                                                              
+         5 INFORMATICA BASICA                                 GII           1          7                                                              
+         6 ALGEBRA                                            GII           1          1                                                              
+         7 CALCULO                                            GII           1          8                                                              
+         8 OPTIMIZACION                                       GII           1          6                                                              
+         9 GESTION DE RIESGOS                                 GII           3          4                                                              
+        10 ASTRONOMIA                                         GF            2          3                                                              
+        11 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+        12 ANALISIS COMPLEJO                                  GM            4          2                                                              
+
+12 rows selected.
+
+SQL> HICE LA 10
+SP2-0042: unknown command "HICE LA 10" - rest of line ignored.
+SQL> INSERT INTO VISTA1
+  2  VALUES (13, 'ESTADISTICA', 'GII', 3, 7);
+INSERT INTO VISTA1
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (ALU0100898026.FK_ASIGNATURA_TITULACION) violated - parent key not found 
+
+
+SQL> ALTER TABLE ASIGNATURA
+  2  DISABLE CONSTRAINT FK_ASIGNATURA_TITULACION;
+
+Table altered.
+
+SQL> INSERT INTO VISTA1
+  2  VALUES (13, 'ESTADISTICA', 'GII', 3, 7);
+
+1 row created.
+
+SQL> ALTER TABLE ASIGNATURA
+  2  ENABLE CONSTRAINT FK_ASIGNATURA_TITULACION;
+
+Table altered.
+
+SQL> HICE LA 11
+SP2-0042: unknown command "HICE LA 11" - rest of line ignored.
+SQL> SELECT *
+  2  FROM VISTA1;
+
+       CAS A                                                  T           CUR        CAR                                                              
+---------- -------------------------------------------------- ---- ---------- ----------                                                              
+        13 ESTADISTICA                                        GII           3          7                                                              
+         1 BASES DE DATOS                                     GII           3          7                                                              
+         2 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+         3 ALMACENES DE DATOS                                 MII           1          7                                                              
+         4 MINERIA DE DATOS                                   MII           1          7                                                              
+         5 INFORMATICA BASICA                                 GII           1          7                                                              
+         6 ALGEBRA                                            GII           1          1                                                              
+         7 CALCULO                                            GII           1          8                                                              
+         8 OPTIMIZACION                                       GII           1          6                                                              
+         9 GESTION DE RIESGOS                                 GII           3          4                                                              
+        10 ASTRONOMIA                                         GF            2          3                                                              
+        11 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+        12 ANALISIS COMPLEJO                                  GM            4          2                                                              
+
+13 rows selected.
+
+SQL> HICE LA 12
+SP2-0042: unknown command "HICE LA 12" - rest of line ignored.
+SQL> SELECT *
+  2  FROM ASIGNATURA;
+
+       CAS A                                                  T           CUR        CAR         CT         CP         CL                             
+---------- -------------------------------------------------- ---- ---------- ---------- ---------- ---------- ----------                             
+        13 ESTADISTICA                                        GII           3          7          0          0          0                             
+         1 BASES DE DATOS                                     GII           3          7          3        1.5        1.5                             
+         2 INTELIGENCIA ARTIFICIAL                            GII           3          4        1.5        1.5          3                             
+         3 ALMACENES DE DATOS                                 MII           1          7        1.5          0        1.5                             
+         4 MINERIA DE DATOS                                   MII           1          7        1.5          0        1.5                             
+         5 INFORMATICA BASICA                                 GII           1          7          3        1.5        1.5                             
+         6 ALGEBRA                                            GII           1          1          3          3          0                             
+         7 CALCULO                                            GII           1          8          3          3          0                             
+         8 OPTIMIZACION                                       GII           1          6          3        1.5        1.5                             
+         9 GESTION DE RIESGOS                                 GII           3          4          3          0          3                             
+        10 ASTRONOMIA                                         GF            2          3          3        1.5        1.5                             
+        11 ENSENANZA DE LA MATEMATICA                         GM            2          5          6          0          0                             
+        12 ANALISIS COMPLEJO                                  GM            4          2        4.5          3          0                             
+
+13 rows selected.
+
+SQL> UPDATE VISTA1
+  2  SET CAS = 6
+  3  WHERE CAS = 13;
+UPDATE VISTA1
+*
+ERROR at line 1:
+ORA-00001: unique constraint (ALU0100898026.SYS_C0017863) violated 
+
+
+SQL> SELECT *
+  2  FROM VISTA1;
+
+       CAS A                                                  T           CUR        CAR                                                              
+---------- -------------------------------------------------- ---- ---------- ----------                                                              
+        13 ESTADISTICA                                        GII           3          7                                                              
+         1 BASES DE DATOS                                     GII           3          7                                                              
+         2 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+         3 ALMACENES DE DATOS                                 MII           1          7                                                              
+         4 MINERIA DE DATOS                                   MII           1          7                                                              
+         5 INFORMATICA BASICA                                 GII           1          7                                                              
+         6 ALGEBRA                                            GII           1          1                                                              
+         7 CALCULO                                            GII           1          8                                                              
+         8 OPTIMIZACION                                       GII           1          6                                                              
+         9 GESTION DE RIESGOS                                 GII           3          4                                                              
+        10 ASTRONOMIA                                         GF            2          3                                                              
+        11 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+        12 ANALISIS COMPLEJO                                  GM            4          2                                                              
+
+13 rows selected.
+
+SQL> HICE LA 15
+SP2-0042: unknown command "HICE LA 15" - rest of line ignored.
+SQL> HICE LA 16
+SP2-0042: unknown command "HICE LA 16" - rest of line ignored.
+SQL> CREATE VIEW VISTA2 AS
+  2  SELECT DNI, A, T, CUR, CAR
+  3  FROM ASIGNATURA, PLAN_DOCENTE;
+
+View created.
+
+SQL> SELECT *
+  2  FROM VISTA2;
+
+       DNI A                                                  T           CUR        CAR                                                              
+---------- -------------------------------------------------- ---- ---------- ----------                                                              
+      1010 ESTADISTICA                                        GII           3          7                                                              
+      1010 ESTADISTICA                                        GII           3          7                                                              
+      1010 ESTADISTICA                                        GII           3          7                                                              
+      1111 ESTADISTICA                                        GII           3          7                                                              
+      1111 ESTADISTICA                                        GII           3          7                                                              
+      2020 ESTADISTICA                                        GII           3          7                                                              
+      2222 ESTADISTICA                                        GII           3          7                                                              
+      2222 ESTADISTICA                                        GII           3          7                                                              
+      3030 ESTADISTICA                                        GII           3          7                                                              
+      3333 ESTADISTICA                                        GII           3          7                                                              
+      3333 ESTADISTICA                                        GII           3          7                                                              
+      4444 ESTADISTICA                                        GII           3          7                                                              
+      4444 ESTADISTICA                                        GII           3          7                                                              
+      4444 ESTADISTICA                                        GII           3          7                                                              
+      5555 ESTADISTICA                                        GII           3          7                                                              
+      6666 ESTADISTICA                                        GII           3          7                                                              
+      7777 ESTADISTICA                                        GII           3          7                                                              
+      8888 ESTADISTICA                                        GII           3          7                                                              
+      9999 ESTADISTICA                                        GII           3          7                                                              
+      1010 BASES DE DATOS                                     GII           3          7                                                              
+      1010 BASES DE DATOS                                     GII           3          7                                                              
+      1010 BASES DE DATOS                                     GII           3          7                                                              
+      1111 BASES DE DATOS                                     GII           3          7                                                              
+      1111 BASES DE DATOS                                     GII           3          7                                                              
+      2020 BASES DE DATOS                                     GII           3          7                                                              
+      2222 BASES DE DATOS                                     GII           3          7                                                              
+      2222 BASES DE DATOS                                     GII           3          7                                                              
+      3030 BASES DE DATOS                                     GII           3          7                                                              
+      3333 BASES DE DATOS                                     GII           3          7                                                              
+      3333 BASES DE DATOS                                     GII           3          7                                                              
+      4444 BASES DE DATOS                                     GII           3          7                                                              
+      4444 BASES DE DATOS                                     GII           3          7                                                              
+      4444 BASES DE DATOS                                     GII           3          7                                                              
+      5555 BASES DE DATOS                                     GII           3          7                                                              
+      6666 BASES DE DATOS                                     GII           3          7                                                              
+      7777 BASES DE DATOS                                     GII           3          7                                                              
+      8888 BASES DE DATOS                                     GII           3          7                                                              
+      9999 BASES DE DATOS                                     GII           3          7                                                              
+      1010 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      1010 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      1010 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      1111 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      1111 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      2020 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      2222 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      2222 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      3030 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      3333 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      3333 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      4444 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      4444 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      4444 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      5555 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      6666 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      7777 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      8888 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      9999 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      1010 ALMACENES DE DATOS                                 MII           1          7                                                              
+      1010 ALMACENES DE DATOS                                 MII           1          7                                                              
+      1010 ALMACENES DE DATOS                                 MII           1          7                                                              
+      1111 ALMACENES DE DATOS                                 MII           1          7                                                              
+      1111 ALMACENES DE DATOS                                 MII           1          7                                                              
+      2020 ALMACENES DE DATOS                                 MII           1          7                                                              
+      2222 ALMACENES DE DATOS                                 MII           1          7                                                              
+      2222 ALMACENES DE DATOS                                 MII           1          7                                                              
+      3030 ALMACENES DE DATOS                                 MII           1          7                                                              
+      3333 ALMACENES DE DATOS                                 MII           1          7                                                              
+      3333 ALMACENES DE DATOS                                 MII           1          7                                                              
+      4444 ALMACENES DE DATOS                                 MII           1          7                                                              
+      4444 ALMACENES DE DATOS                                 MII           1          7                                                              
+      4444 ALMACENES DE DATOS                                 MII           1          7                                                              
+      5555 ALMACENES DE DATOS                                 MII           1          7                                                              
+      6666 ALMACENES DE DATOS                                 MII           1          7                                                              
+      7777 ALMACENES DE DATOS                                 MII           1          7                                                              
+      8888 ALMACENES DE DATOS                                 MII           1          7                                                              
+      9999 ALMACENES DE DATOS                                 MII           1          7                                                              
+      1010 MINERIA DE DATOS                                   MII           1          7                                                              
+      1010 MINERIA DE DATOS                                   MII           1          7                                                              
+      1010 MINERIA DE DATOS                                   MII           1          7                                                              
+      1111 MINERIA DE DATOS                                   MII           1          7                                                              
+      1111 MINERIA DE DATOS                                   MII           1          7                                                              
+      2020 MINERIA DE DATOS                                   MII           1          7                                                              
+      2222 MINERIA DE DATOS                                   MII           1          7                                                              
+      2222 MINERIA DE DATOS                                   MII           1          7                                                              
+      3030 MINERIA DE DATOS                                   MII           1          7                                                              
+      3333 MINERIA DE DATOS                                   MII           1          7                                                              
+      3333 MINERIA DE DATOS                                   MII           1          7                                                              
+      4444 MINERIA DE DATOS                                   MII           1          7                                                              
+      4444 MINERIA DE DATOS                                   MII           1          7                                                              
+      4444 MINERIA DE DATOS                                   MII           1          7                                                              
+      5555 MINERIA DE DATOS                                   MII           1          7                                                              
+      6666 MINERIA DE DATOS                                   MII           1          7                                                              
+      7777 MINERIA DE DATOS                                   MII           1          7                                                              
+      8888 MINERIA DE DATOS                                   MII           1          7                                                              
+      9999 MINERIA DE DATOS                                   MII           1          7                                                              
+      1010 INFORMATICA BASICA                                 GII           1          7                                                              
+      1010 INFORMATICA BASICA                                 GII           1          7                                                              
+      1010 INFORMATICA BASICA                                 GII           1          7                                                              
+      1111 INFORMATICA BASICA                                 GII           1          7                                                              
+      1111 INFORMATICA BASICA                                 GII           1          7                                                              
+      2020 INFORMATICA BASICA                                 GII           1          7                                                              
+      2222 INFORMATICA BASICA                                 GII           1          7                                                              
+      2222 INFORMATICA BASICA                                 GII           1          7                                                              
+      3030 INFORMATICA BASICA                                 GII           1          7                                                              
+      3333 INFORMATICA BASICA                                 GII           1          7                                                              
+      3333 INFORMATICA BASICA                                 GII           1          7                                                              
+      4444 INFORMATICA BASICA                                 GII           1          7                                                              
+      4444 INFORMATICA BASICA                                 GII           1          7                                                              
+      4444 INFORMATICA BASICA                                 GII           1          7                                                              
+      5555 INFORMATICA BASICA                                 GII           1          7                                                              
+      6666 INFORMATICA BASICA                                 GII           1          7                                                              
+      7777 INFORMATICA BASICA                                 GII           1          7                                                              
+      8888 INFORMATICA BASICA                                 GII           1          7                                                              
+      9999 INFORMATICA BASICA                                 GII           1          7                                                              
+      1010 ALGEBRA                                            GII           1          1                                                              
+      1010 ALGEBRA                                            GII           1          1                                                              
+      1010 ALGEBRA                                            GII           1          1                                                              
+      1111 ALGEBRA                                            GII           1          1                                                              
+      1111 ALGEBRA                                            GII           1          1                                                              
+      2020 ALGEBRA                                            GII           1          1                                                              
+      2222 ALGEBRA                                            GII           1          1                                                              
+      2222 ALGEBRA                                            GII           1          1                                                              
+      3030 ALGEBRA                                            GII           1          1                                                              
+      3333 ALGEBRA                                            GII           1          1                                                              
+      3333 ALGEBRA                                            GII           1          1                                                              
+      4444 ALGEBRA                                            GII           1          1                                                              
+      4444 ALGEBRA                                            GII           1          1                                                              
+      4444 ALGEBRA                                            GII           1          1                                                              
+      5555 ALGEBRA                                            GII           1          1                                                              
+      6666 ALGEBRA                                            GII           1          1                                                              
+      7777 ALGEBRA                                            GII           1          1                                                              
+      8888 ALGEBRA                                            GII           1          1                                                              
+      9999 ALGEBRA                                            GII           1          1                                                              
+      1010 CALCULO                                            GII           1          8                                                              
+      1010 CALCULO                                            GII           1          8                                                              
+      1010 CALCULO                                            GII           1          8                                                              
+      1111 CALCULO                                            GII           1          8                                                              
+      1111 CALCULO                                            GII           1          8                                                              
+      2020 CALCULO                                            GII           1          8                                                              
+      2222 CALCULO                                            GII           1          8                                                              
+      2222 CALCULO                                            GII           1          8                                                              
+      3030 CALCULO                                            GII           1          8                                                              
+      3333 CALCULO                                            GII           1          8                                                              
+      3333 CALCULO                                            GII           1          8                                                              
+      4444 CALCULO                                            GII           1          8                                                              
+      4444 CALCULO                                            GII           1          8                                                              
+      4444 CALCULO                                            GII           1          8                                                              
+      5555 CALCULO                                            GII           1          8                                                              
+      6666 CALCULO                                            GII           1          8                                                              
+      7777 CALCULO                                            GII           1          8                                                              
+      8888 CALCULO                                            GII           1          8                                                              
+      9999 CALCULO                                            GII           1          8                                                              
+      1010 OPTIMIZACION                                       GII           1          6                                                              
+      1010 OPTIMIZACION                                       GII           1          6                                                              
+      1010 OPTIMIZACION                                       GII           1          6                                                              
+      1111 OPTIMIZACION                                       GII           1          6                                                              
+      1111 OPTIMIZACION                                       GII           1          6                                                              
+      2020 OPTIMIZACION                                       GII           1          6                                                              
+      2222 OPTIMIZACION                                       GII           1          6                                                              
+      2222 OPTIMIZACION                                       GII           1          6                                                              
+      3030 OPTIMIZACION                                       GII           1          6                                                              
+      3333 OPTIMIZACION                                       GII           1          6                                                              
+      3333 OPTIMIZACION                                       GII           1          6                                                              
+      4444 OPTIMIZACION                                       GII           1          6                                                              
+      4444 OPTIMIZACION                                       GII           1          6                                                              
+      4444 OPTIMIZACION                                       GII           1          6                                                              
+      5555 OPTIMIZACION                                       GII           1          6                                                              
+      6666 OPTIMIZACION                                       GII           1          6                                                              
+      7777 OPTIMIZACION                                       GII           1          6                                                              
+      8888 OPTIMIZACION                                       GII           1          6                                                              
+      9999 OPTIMIZACION                                       GII           1          6                                                              
+      1010 GESTION DE RIESGOS                                 GII           3          4                                                              
+      1010 GESTION DE RIESGOS                                 GII           3          4                                                              
+      1010 GESTION DE RIESGOS                                 GII           3          4                                                              
+      1111 GESTION DE RIESGOS                                 GII           3          4                                                              
+      1111 GESTION DE RIESGOS                                 GII           3          4                                                              
+      2020 GESTION DE RIESGOS                                 GII           3          4                                                              
+      2222 GESTION DE RIESGOS                                 GII           3          4                                                              
+      2222 GESTION DE RIESGOS                                 GII           3          4                                                              
+      3030 GESTION DE RIESGOS                                 GII           3          4                                                              
+      3333 GESTION DE RIESGOS                                 GII           3          4                                                              
+      3333 GESTION DE RIESGOS                                 GII           3          4                                                              
+      4444 GESTION DE RIESGOS                                 GII           3          4                                                              
+      4444 GESTION DE RIESGOS                                 GII           3          4                                                              
+      4444 GESTION DE RIESGOS                                 GII           3          4                                                              
+      5555 GESTION DE RIESGOS                                 GII           3          4                                                              
+      6666 GESTION DE RIESGOS                                 GII           3          4                                                              
+      7777 GESTION DE RIESGOS                                 GII           3          4                                                              
+      8888 GESTION DE RIESGOS                                 GII           3          4                                                              
+      9999 GESTION DE RIESGOS                                 GII           3          4                                                              
+      1010 ASTRONOMIA                                         GF            2          3                                                              
+      1010 ASTRONOMIA                                         GF            2          3                                                              
+      1010 ASTRONOMIA                                         GF            2          3                                                              
+      1111 ASTRONOMIA                                         GF            2          3                                                              
+      1111 ASTRONOMIA                                         GF            2          3                                                              
+      2020 ASTRONOMIA                                         GF            2          3                                                              
+      2222 ASTRONOMIA                                         GF            2          3                                                              
+      2222 ASTRONOMIA                                         GF            2          3                                                              
+      3030 ASTRONOMIA                                         GF            2          3                                                              
+      3333 ASTRONOMIA                                         GF            2          3                                                              
+      3333 ASTRONOMIA                                         GF            2          3                                                              
+      4444 ASTRONOMIA                                         GF            2          3                                                              
+      4444 ASTRONOMIA                                         GF            2          3                                                              
+      4444 ASTRONOMIA                                         GF            2          3                                                              
+      5555 ASTRONOMIA                                         GF            2          3                                                              
+      6666 ASTRONOMIA                                         GF            2          3                                                              
+      7777 ASTRONOMIA                                         GF            2          3                                                              
+      8888 ASTRONOMIA                                         GF            2          3                                                              
+      9999 ASTRONOMIA                                         GF            2          3                                                              
+      1010 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      1010 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      1010 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      1111 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      1111 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      2020 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      2222 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      2222 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      3030 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      3333 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      3333 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      4444 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      4444 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      4444 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      5555 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      6666 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      7777 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      8888 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      9999 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      1010 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      1010 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      1010 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      1111 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      1111 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      2020 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      2222 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      2222 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      3030 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      3333 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      3333 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      4444 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      4444 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      4444 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      5555 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      6666 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      7777 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      8888 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      9999 ANALISIS COMPLEJO                                  GM            4          2                                                              
+
+247 rows selected.
+
+SQL> DROP VIEW VISTA2;
+
+View dropped.
+
+SQL> CREATE VIEW VISTA2 AS
+  2  SELECT DNI, A, T, CUR, CAR
+  3  FROM ASIGNATURA, PLAN_DOCENTE
+  4  WHERE
+  5  
+SQL> CREATE VIEW VISTA2 AS
+  2  SELECT DNI, A, T, CUR, CAR
+  3  FROM VISTA1, PLAN_DOCENTE
+  4  ;
+
+View created.
+
+SQL> SELECT *
+  2  FROM VISTA2;
+
+       DNI A                                                  T           CUR        CAR                                                              
+---------- -------------------------------------------------- ---- ---------- ----------                                                              
+      1010 ESTADISTICA                                        GII           3          7                                                              
+      1010 ESTADISTICA                                        GII           3          7                                                              
+      1010 ESTADISTICA                                        GII           3          7                                                              
+      1111 ESTADISTICA                                        GII           3          7                                                              
+      1111 ESTADISTICA                                        GII           3          7                                                              
+      2020 ESTADISTICA                                        GII           3          7                                                              
+      2222 ESTADISTICA                                        GII           3          7                                                              
+      2222 ESTADISTICA                                        GII           3          7                                                              
+      3030 ESTADISTICA                                        GII           3          7                                                              
+      3333 ESTADISTICA                                        GII           3          7                                                              
+      3333 ESTADISTICA                                        GII           3          7                                                              
+      4444 ESTADISTICA                                        GII           3          7                                                              
+      4444 ESTADISTICA                                        GII           3          7                                                              
+      4444 ESTADISTICA                                        GII           3          7                                                              
+      5555 ESTADISTICA                                        GII           3          7                                                              
+      6666 ESTADISTICA                                        GII           3          7                                                              
+      7777 ESTADISTICA                                        GII           3          7                                                              
+      8888 ESTADISTICA                                        GII           3          7                                                              
+      9999 ESTADISTICA                                        GII           3          7                                                              
+      1010 BASES DE DATOS                                     GII           3          7                                                              
+      1010 BASES DE DATOS                                     GII           3          7                                                              
+      1010 BASES DE DATOS                                     GII           3          7                                                              
+      1111 BASES DE DATOS                                     GII           3          7                                                              
+      1111 BASES DE DATOS                                     GII           3          7                                                              
+      2020 BASES DE DATOS                                     GII           3          7                                                              
+      2222 BASES DE DATOS                                     GII           3          7                                                              
+      2222 BASES DE DATOS                                     GII           3          7                                                              
+      3030 BASES DE DATOS                                     GII           3          7                                                              
+      3333 BASES DE DATOS                                     GII           3          7                                                              
+      3333 BASES DE DATOS                                     GII           3          7                                                              
+      4444 BASES DE DATOS                                     GII           3          7                                                              
+      4444 BASES DE DATOS                                     GII           3          7                                                              
+      4444 BASES DE DATOS                                     GII           3          7                                                              
+      5555 BASES DE DATOS                                     GII           3          7                                                              
+      6666 BASES DE DATOS                                     GII           3          7                                                              
+      7777 BASES DE DATOS                                     GII           3          7                                                              
+      8888 BASES DE DATOS                                     GII           3          7                                                              
+      9999 BASES DE DATOS                                     GII           3          7                                                              
+      1010 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      1010 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      1010 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      1111 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      1111 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      2020 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      2222 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      2222 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      3030 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      3333 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      3333 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      4444 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      4444 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      4444 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      5555 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      6666 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      7777 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      8888 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      9999 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      1010 ALMACENES DE DATOS                                 MII           1          7                                                              
+      1010 ALMACENES DE DATOS                                 MII           1          7                                                              
+      1010 ALMACENES DE DATOS                                 MII           1          7                                                              
+      1111 ALMACENES DE DATOS                                 MII           1          7                                                              
+      1111 ALMACENES DE DATOS                                 MII           1          7                                                              
+      2020 ALMACENES DE DATOS                                 MII           1          7                                                              
+      2222 ALMACENES DE DATOS                                 MII           1          7                                                              
+      2222 ALMACENES DE DATOS                                 MII           1          7                                                              
+      3030 ALMACENES DE DATOS                                 MII           1          7                                                              
+      3333 ALMACENES DE DATOS                                 MII           1          7                                                              
+      3333 ALMACENES DE DATOS                                 MII           1          7                                                              
+      4444 ALMACENES DE DATOS                                 MII           1          7                                                              
+      4444 ALMACENES DE DATOS                                 MII           1          7                                                              
+      4444 ALMACENES DE DATOS                                 MII           1          7                                                              
+      5555 ALMACENES DE DATOS                                 MII           1          7                                                              
+      6666 ALMACENES DE DATOS                                 MII           1          7                                                              
+      7777 ALMACENES DE DATOS                                 MII           1          7                                                              
+      8888 ALMACENES DE DATOS                                 MII           1          7                                                              
+      9999 ALMACENES DE DATOS                                 MII           1          7                                                              
+      1010 MINERIA DE DATOS                                   MII           1          7                                                              
+      1010 MINERIA DE DATOS                                   MII           1          7                                                              
+      1010 MINERIA DE DATOS                                   MII           1          7                                                              
+      1111 MINERIA DE DATOS                                   MII           1          7                                                              
+      1111 MINERIA DE DATOS                                   MII           1          7                                                              
+      2020 MINERIA DE DATOS                                   MII           1          7                                                              
+      2222 MINERIA DE DATOS                                   MII           1          7                                                              
+      2222 MINERIA DE DATOS                                   MII           1          7                                                              
+      3030 MINERIA DE DATOS                                   MII           1          7                                                              
+      3333 MINERIA DE DATOS                                   MII           1          7                                                              
+      3333 MINERIA DE DATOS                                   MII           1          7                                                              
+      4444 MINERIA DE DATOS                                   MII           1          7                                                              
+      4444 MINERIA DE DATOS                                   MII           1          7                                                              
+      4444 MINERIA DE DATOS                                   MII           1          7                                                              
+      5555 MINERIA DE DATOS                                   MII           1          7                                                              
+      6666 MINERIA DE DATOS                                   MII           1          7                                                              
+      7777 MINERIA DE DATOS                                   MII           1          7                                                              
+      8888 MINERIA DE DATOS                                   MII           1          7                                                              
+      9999 MINERIA DE DATOS                                   MII           1          7                                                              
+      1010 INFORMATICA BASICA                                 GII           1          7                                                              
+      1010 INFORMATICA BASICA                                 GII           1          7                                                              
+      1010 INFORMATICA BASICA                                 GII           1          7                                                              
+      1111 INFORMATICA BASICA                                 GII           1          7                                                              
+      1111 INFORMATICA BASICA                                 GII           1          7                                                              
+      2020 INFORMATICA BASICA                                 GII           1          7                                                              
+      2222 INFORMATICA BASICA                                 GII           1          7                                                              
+      2222 INFORMATICA BASICA                                 GII           1          7                                                              
+      3030 INFORMATICA BASICA                                 GII           1          7                                                              
+      3333 INFORMATICA BASICA                                 GII           1          7                                                              
+      3333 INFORMATICA BASICA                                 GII           1          7                                                              
+      4444 INFORMATICA BASICA                                 GII           1          7                                                              
+      4444 INFORMATICA BASICA                                 GII           1          7                                                              
+      4444 INFORMATICA BASICA                                 GII           1          7                                                              
+      5555 INFORMATICA BASICA                                 GII           1          7                                                              
+      6666 INFORMATICA BASICA                                 GII           1          7                                                              
+      7777 INFORMATICA BASICA                                 GII           1          7                                                              
+      8888 INFORMATICA BASICA                                 GII           1          7                                                              
+      9999 INFORMATICA BASICA                                 GII           1          7                                                              
+      1010 ALGEBRA                                            GII           1          1                                                              
+      1010 ALGEBRA                                            GII           1          1                                                              
+      1010 ALGEBRA                                            GII           1          1                                                              
+      1111 ALGEBRA                                            GII           1          1                                                              
+      1111 ALGEBRA                                            GII           1          1                                                              
+      2020 ALGEBRA                                            GII           1          1                                                              
+      2222 ALGEBRA                                            GII           1          1                                                              
+      2222 ALGEBRA                                            GII           1          1                                                              
+      3030 ALGEBRA                                            GII           1          1                                                              
+      3333 ALGEBRA                                            GII           1          1                                                              
+      3333 ALGEBRA                                            GII           1          1                                                              
+      4444 ALGEBRA                                            GII           1          1                                                              
+      4444 ALGEBRA                                            GII           1          1                                                              
+      4444 ALGEBRA                                            GII           1          1                                                              
+      5555 ALGEBRA                                            GII           1          1                                                              
+      6666 ALGEBRA                                            GII           1          1                                                              
+      7777 ALGEBRA                                            GII           1          1                                                              
+      8888 ALGEBRA                                            GII           1          1                                                              
+      9999 ALGEBRA                                            GII           1          1                                                              
+      1010 CALCULO                                            GII           1          8                                                              
+      1010 CALCULO                                            GII           1          8                                                              
+      1010 CALCULO                                            GII           1          8                                                              
+      1111 CALCULO                                            GII           1          8                                                              
+      1111 CALCULO                                            GII           1          8                                                              
+      2020 CALCULO                                            GII           1          8                                                              
+      2222 CALCULO                                            GII           1          8                                                              
+      2222 CALCULO                                            GII           1          8                                                              
+      3030 CALCULO                                            GII           1          8                                                              
+      3333 CALCULO                                            GII           1          8                                                              
+      3333 CALCULO                                            GII           1          8                                                              
+      4444 CALCULO                                            GII           1          8                                                              
+      4444 CALCULO                                            GII           1          8                                                              
+      4444 CALCULO                                            GII           1          8                                                              
+      5555 CALCULO                                            GII           1          8                                                              
+      6666 CALCULO                                            GII           1          8                                                              
+      7777 CALCULO                                            GII           1          8                                                              
+      8888 CALCULO                                            GII           1          8                                                              
+      9999 CALCULO                                            GII           1          8                                                              
+      1010 OPTIMIZACION                                       GII           1          6                                                              
+      1010 OPTIMIZACION                                       GII           1          6                                                              
+      1010 OPTIMIZACION                                       GII           1          6                                                              
+      1111 OPTIMIZACION                                       GII           1          6                                                              
+      1111 OPTIMIZACION                                       GII           1          6                                                              
+      2020 OPTIMIZACION                                       GII           1          6                                                              
+      2222 OPTIMIZACION                                       GII           1          6                                                              
+      2222 OPTIMIZACION                                       GII           1          6                                                              
+      3030 OPTIMIZACION                                       GII           1          6                                                              
+      3333 OPTIMIZACION                                       GII           1          6                                                              
+      3333 OPTIMIZACION                                       GII           1          6                                                              
+      4444 OPTIMIZACION                                       GII           1          6                                                              
+      4444 OPTIMIZACION                                       GII           1          6                                                              
+      4444 OPTIMIZACION                                       GII           1          6                                                              
+      5555 OPTIMIZACION                                       GII           1          6                                                              
+      6666 OPTIMIZACION                                       GII           1          6                                                              
+      7777 OPTIMIZACION                                       GII           1          6                                                              
+      8888 OPTIMIZACION                                       GII           1          6                                                              
+      9999 OPTIMIZACION                                       GII           1          6                                                              
+      1010 GESTION DE RIESGOS                                 GII           3          4                                                              
+      1010 GESTION DE RIESGOS                                 GII           3          4                                                              
+      1010 GESTION DE RIESGOS                                 GII           3          4                                                              
+      1111 GESTION DE RIESGOS                                 GII           3          4                                                              
+      1111 GESTION DE RIESGOS                                 GII           3          4                                                              
+      2020 GESTION DE RIESGOS                                 GII           3          4                                                              
+      2222 GESTION DE RIESGOS                                 GII           3          4                                                              
+      2222 GESTION DE RIESGOS                                 GII           3          4                                                              
+      3030 GESTION DE RIESGOS                                 GII           3          4                                                              
+      3333 GESTION DE RIESGOS                                 GII           3          4                                                              
+      3333 GESTION DE RIESGOS                                 GII           3          4                                                              
+      4444 GESTION DE RIESGOS                                 GII           3          4                                                              
+      4444 GESTION DE RIESGOS                                 GII           3          4                                                              
+      4444 GESTION DE RIESGOS                                 GII           3          4                                                              
+      5555 GESTION DE RIESGOS                                 GII           3          4                                                              
+      6666 GESTION DE RIESGOS                                 GII           3          4                                                              
+      7777 GESTION DE RIESGOS                                 GII           3          4                                                              
+      8888 GESTION DE RIESGOS                                 GII           3          4                                                              
+      9999 GESTION DE RIESGOS                                 GII           3          4                                                              
+      1010 ASTRONOMIA                                         GF            2          3                                                              
+      1010 ASTRONOMIA                                         GF            2          3                                                              
+      1010 ASTRONOMIA                                         GF            2          3                                                              
+      1111 ASTRONOMIA                                         GF            2          3                                                              
+      1111 ASTRONOMIA                                         GF            2          3                                                              
+      2020 ASTRONOMIA                                         GF            2          3                                                              
+      2222 ASTRONOMIA                                         GF            2          3                                                              
+      2222 ASTRONOMIA                                         GF            2          3                                                              
+      3030 ASTRONOMIA                                         GF            2          3                                                              
+      3333 ASTRONOMIA                                         GF            2          3                                                              
+      3333 ASTRONOMIA                                         GF            2          3                                                              
+      4444 ASTRONOMIA                                         GF            2          3                                                              
+      4444 ASTRONOMIA                                         GF            2          3                                                              
+      4444 ASTRONOMIA                                         GF            2          3                                                              
+      5555 ASTRONOMIA                                         GF            2          3                                                              
+      6666 ASTRONOMIA                                         GF            2          3                                                              
+      7777 ASTRONOMIA                                         GF            2          3                                                              
+      8888 ASTRONOMIA                                         GF            2          3                                                              
+      9999 ASTRONOMIA                                         GF            2          3                                                              
+      1010 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      1010 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      1010 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      1111 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      1111 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      2020 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      2222 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      2222 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      3030 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      3333 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      3333 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      4444 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      4444 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      4444 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      5555 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      6666 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      7777 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      8888 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      9999 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      1010 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      1010 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      1010 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      1111 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      1111 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      2020 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      2222 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      2222 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      3030 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      3333 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      3333 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      4444 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      4444 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      4444 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      5555 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      6666 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      7777 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      8888 ANALISIS COMPLEJO                                  GM            4          2                                                              
+      9999 ANALISIS COMPLEJO                                  GM            4          2                                                              
+
+247 rows selected.
+
+SQL> SELECT *
+  2  FROM VISTA1;
+
+       CAS A                                                  T           CUR        CAR                                                              
+---------- -------------------------------------------------- ---- ---------- ----------                                                              
+        13 ESTADISTICA                                        GII           3          7                                                              
+         1 BASES DE DATOS                                     GII           3          7                                                              
+         2 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+         3 ALMACENES DE DATOS                                 MII           1          7                                                              
+         4 MINERIA DE DATOS                                   MII           1          7                                                              
+         5 INFORMATICA BASICA                                 GII           1          7                                                              
+         6 ALGEBRA                                            GII           1          1                                                              
+         7 CALCULO                                            GII           1          8                                                              
+         8 OPTIMIZACION                                       GII           1          6                                                              
+         9 GESTION DE RIESGOS                                 GII           3          4                                                              
+        10 ASTRONOMIA                                         GF            2          3                                                              
+        11 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+        12 ANALISIS COMPLEJO                                  GM            4          2                                                              
+
+13 rows selected.
+
+SQL> DROP VIEW VISTA2;
+
+View dropped.
+
+SQL> CREATE VIEW VISTA2
+  2  AS
+  3  SELECT DNI, A, T, CUR, CAR
+  4  FROM VISTA1, PLAN_DOCENTE
+  5  WHERE VISTA1.CAS = PLAN_DOCENTE.CAS;
+
+View created.
+
+SQL> SELECT *
+  2  FROM VISTA2;
+
+       DNI A                                                  T           CUR        CAR                                                              
+---------- -------------------------------------------------- ---- ---------- ----------                                                              
+      4444 BASES DE DATOS                                     GII           3          7                                                              
+      3333 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      1010 INTELIGENCIA ARTIFICIAL                            GII           3          4                                                              
+      2222 ALMACENES DE DATOS                                 MII           1          7                                                              
+      2020 ALMACENES DE DATOS                                 MII           1          7                                                              
+      4444 MINERIA DE DATOS                                   MII           1          7                                                              
+      2222 MINERIA DE DATOS                                   MII           1          7                                                              
+      4444 INFORMATICA BASICA                                 GII           1          7                                                              
+      5555 ALGEBRA                                            GII           1          1                                                              
+      9999 CALCULO                                            GII           1          8                                                              
+      3030 OPTIMIZACION                                       GII           1          6                                                              
+      1111 OPTIMIZACION                                       GII           1          6                                                              
+      1111 OPTIMIZACION                                       GII           1          6                                                              
+      3333 GESTION DE RIESGOS                                 GII           3          4                                                              
+      1010 GESTION DE RIESGOS                                 GII           3          4                                                              
+      1010 GESTION DE RIESGOS                                 GII           3          4                                                              
+      6666 ASTRONOMIA                                         GF            2          3                                                              
+      8888 ENSENANZA DE LA MATEMATICA                         GM            2          5                                                              
+      7777 ANALISIS COMPLEJO                                  GM            4          2                                                              
+
+19 rows selected.
+
+SQL> HICE LA 18
+SP2-0042: unknown command "HICE LA 18" - rest of line ignored.
+SQL> UPDATE VISTA2
+  2  SET A = 'ANALISIS SIMPLE'
+  3  WHERE CUR = 4;
+SET A = 'ANALISIS SIMPLE'
+    *
+ERROR at line 2:
+ORA-01779: cannot modify a column which maps to a non key-preserved table 
+
+
+SQL> DESCRIBE VISTA2;
+ Name                                                                                Null?    Type
+ ----------------------------------------------------------------------------------- -------- --------------------------------------------------------
+ DNI                                                                                 NOT NULL NUMBER(8)
+ A                                                                                   NOT NULL VARCHAR2(50)
+ T                                                                                   NOT NULL CHAR(4)
+ CUR                                                                                          NUMBER(1)
+ CAR                                                                                          NUMBER(3)
+
+SQL> DROP VIEW VISTA1;
+
+View dropped.
+
+SQL> HICE EL 21
+SP2-0042: unknown command "HICE EL 21" - rest of line ignored.
+SQL> SELECT *
+  2  FROM VISTA2;
+FROM VISTA2
+     *
+ERROR at line 2:
+ORA-04063: view "ALU0100898026.VISTA
